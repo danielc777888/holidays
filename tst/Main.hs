@@ -1,6 +1,9 @@
 module Main where
 
-import Holidays (holidays)
+import Data.Time
+import Holidays
 
 main :: IO ()
-main = putStrLn $ show holidays
+main = print (filter(\h ->
+                       let (year, _, _) = toGregorian (day h)
+                       in year == 2024) holidays)

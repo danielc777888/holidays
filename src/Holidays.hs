@@ -1,6 +1,5 @@
 module Holidays
-  (holidays)
+  (module Holidays.SouthAfrica)
 where
 
-holidays :: [Int]
-holidays = [1,2,3]
+import Holidays.SouthAfrica
