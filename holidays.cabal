@@ -1,4 +1,4 @@
-cabal-version:       3.12
+cabal-version:       3.6
 
 name:                holidays
 version:             0.1.0.0
@@ -10,25 +10,26 @@ author:              Daniel Cabral
 maintainer:          danielc777888@gmail.com
 extra-source-files:  CHANGELOG.md
 
-tested-with:         GHC == 9.10.1
+tested-with:         GHC == 8.10.7
 
 common common
-  ghc-options: -Wall
+  ghc-options:       -Wall
   build-depends:
-    base ==4.20.0.0,
-    time ==1.14
+    base ==4.14.3.0,
+    containers ==0.7,
+    time ==1.12.2
+  default-language:  Haskell2010
 
 library
   import:            common
   exposed-modules:   Holidays
   other-modules:     Holidays.SouthAfrica
   hs-source-dirs:    src
-  default-language:  GHC2024
 
 test-suite holidays-test
-  import:           common
+  import:           common           
+  type:             exitcode-stdio-1.0
   build-depends:
     holidays
   hs-source-dirs:    tst
   main-is:           Main.hs
-  default-language:  GHC2024
