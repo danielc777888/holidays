@@ -6,7 +6,8 @@
 - Create module with ISO 3166 country name.
 
 ## TODO
-- ZAF unit tests (2024 -> 2026
+- remove use of stylish haskell, replace with ormolu
+- ZAF unit tests (2024 -> 2026)
 - ZAF propery based tests
 - haddock documentation
 - refactoring, base module,
