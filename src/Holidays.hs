@@ -1,13 +1,13 @@
 module Holidays (
   holidays,
-  ISO3166Alpha3
+  ISO3166Alpha3,
 )
 where
 
-import qualified Holidays.SouthAfrica as ZAF
+import Holidays.SouthAfrica qualified as ZAF
 
+import Data.Set qualified as S
 import Data.Time
-import qualified Data.Set as S
 
 type ISO3166Alpha3 = String
 

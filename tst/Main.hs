@@ -1,9 +1,8 @@
 module Main where
 
-import qualified Data.Set as S
+import Data.Set qualified as S
 
 import Holidays
-
 
 main :: IO ()
 main = do
