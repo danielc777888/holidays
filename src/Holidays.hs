@@ -1,17 +1,26 @@
 module Holidays (
   holidays,
-  ISO3166Alpha3,
+  mkCountry,
 )
 where
 
+import Data.Set qualified as S
+import Data.Time qualified as T
+import Holidays.Base
 import Holidays.SouthAfrica qualified as ZAF
 
-import Data.Set qualified as S
-import Data.Time
+-- Three-letter country codes
+type ISO_3166_1_Alpha_3 = String
 
-type ISO3166Alpha3 = String
+data Country = ZAF
 
-holidays :: Year -> ISO3166Alpha3 -> S.Set Day
-holidays x y = case y of
-  "ZAF" -> ZAF.holidays x
-  country -> error $ "Country " <> country <> " not supported."
+mkCountry :: ISO_3166_1_Alpha_3 -> Maybe Country
+mkCountry countryCode =
+  case countryCode of
+    "ZAF" -> Just ZAF
+    _ -> Nothing
+
+holidays :: Year -> Country -> S.Set T.Day
+holidays year country =
+  case country of
+    ZAF -> ZAF.holidays year

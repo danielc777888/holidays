@@ -17,19 +17,24 @@ common common
   build-depends:
     base ^>=4.17.2.1,
     containers ^>=0.7,
-    time ^>=1.14
+    time >=1.4 && <2
   default-language:  GHC2021
 
 library
   import:            common
   exposed-modules:   Holidays
-  other-modules:     Holidays.SouthAfrica
+  other-modules:
+    Holidays.Base,
+    Holidays.SouthAfrica
   hs-source-dirs:    src
 
-test-suite holidays-test
-  import:           common           
+test-suite tests
+  import:           common
   type:             exitcode-stdio-1.0
   build-depends:
-    holidays
+    holidays,
+    tasty >=1.5,
+    tasty-hunit >=0.10,
+    tasty-quickcheck >=0.10
   hs-source-dirs:    tst
   main-is:           Main.hs

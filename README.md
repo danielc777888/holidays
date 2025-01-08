@@ -2,16 +2,24 @@
 - Public holidays with Haskell.
 - Because all lazy programmers need holidays!
 
+## Features
+- Returns public holidays of a country, excluding weekends.
+
+## Usage
+
+
 ## New Countries
-- Create module with ISO 3166 country name.
+- Create module with ISO 3166 country name. eg. SouthAfrica.hs
+
+## Countries Implemented
+| Country | Implemented |
+| --- | ----------- |
+| BWA | &#x274c; |
+| ZAF | &#x2705; |
 
 ## TODO
-- remove use of stylish haskell, replace with ormolu
-- ZAF unit tests (2024 -> 2026)
-- ZAF propery based tests
+- ZAF propery based tests (year must always be the same)
 - haddock documentation
-- refactoring, base module,
+- edsl for describing holidays??
 - refactoring less boilerplate to describe??
-- functions to query holidays??
-- better error handling (invalid year, invalid country)
-- new country MOZA, NAM, BOT, ZIM
+- new country MOZA, NAM, BOT, ZIM, US, UK, FRANCE

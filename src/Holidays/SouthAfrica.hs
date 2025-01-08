@@ -7,16 +7,18 @@ module Holidays.SouthAfrica (
 import Data.Set qualified as S
 import Data.Time
 import Data.Time.Calendar.Easter
+import Holidays.Base qualified as H
 
 -- Annual holidays
+
 annualHolidays :: Year -> [Day]
-annualHolidays x =
+annualHolidays year =
   let
-    annualHoliday = fromGregorian x
+    annualHoliday = fromGregorian year
     newYearsDay = annualHoliday 1 1
+    familyDay = gregorianEaster year
     humanRightsDay = annualHoliday 3 21
     goodFriday = addDays (-2) familyDay
-    familyDay = gregorianEaster x
     freedomDay = annualHoliday 4 27
     workersDay = annualHoliday 5 1
     youthDay = annualHoliday 6 16
@@ -29,17 +31,21 @@ annualHolidays x =
     [newYearsDay, humanRightsDay, goodFriday, familyDay, freedomDay, workersDay, youthDay, nationalWomensDay, heritageDay, dayOfReconciliation, christmasDay, dayOfGoodwill]
 
 -- Special days
+
+
+-- 2024
 generalElections2024 :: Day
 generalElections2024 = fromGregorian 2024 5 29
 
 -- General transformations
 sundayRule :: Day -> Day
-sundayRule x = if dayOfWeek x == Sunday then addDays 1 x else x
+sundayRule day = if dayOfWeek day == Sunday then addDays 1 day else day
 
 -- South African public holidays
-holidays :: Year -> S.Set Day
-holidays x = S.fromList (map sundayRule hs)
+holidays :: H.Year -> S.Set Day
+holidays year = S.fromList (map sundayRule hs)
   where
-    hs = case x of
-      2024 -> generalElections2024 : annualHolidays x
-      _ -> annualHolidays x
+    year' = fromIntegral year
+    hs = case year' of
+      2024 -> generalElections2024 : annualHolidays year'
+      _ -> annualHolidays year'
