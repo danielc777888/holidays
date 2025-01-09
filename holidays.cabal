@@ -38,3 +38,6 @@ test-suite tests
     tasty-quickcheck >=0.10
   hs-source-dirs:    tst
   main-is:           Main.hs
+  other-modules:
+    Test.Holidays
+    Test.Holidays.SouthAfrica

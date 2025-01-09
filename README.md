@@ -18,8 +18,6 @@
 | ZAF | &#x2705; |
 
 ## TODO
-- ZAF propery based tests (year must always be the same)
 - haddock documentation
 - edsl for describing holidays??
 - refactoring less boilerplate to describe??
-- new country MOZA, NAM, BOT, ZIM, US, UK, FRANCE
