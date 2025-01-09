@@ -1,4 +1,5 @@
 module Holidays (
+  Year (..),
   holidays,
   mkCountry,
 )

@@ -3,7 +3,7 @@ module Main where
 import Data.List
 import Data.Set qualified as S
 import Data.Time
-import Holidays
+import Holidays qualified as H
 import Test.Tasty
 import Test.Tasty.HUnit
 
@@ -19,7 +19,7 @@ zafUnitTests =
   testGroup
     "ZAF Unit tests"
     [ testCase "2024" $
-        S.toAscList (maybe S.empty (holidays 2024) (mkCountry "ZAF"))
+        S.toAscList (maybe S.empty (H.holidays (H.Year 2024)) (H.mkCountry "ZAF"))
           @?= [ fromGregorian 2024 1 1,
                 fromGregorian 2024 3 21,
                 fromGregorian 2024 3 29,
@@ -35,7 +35,7 @@ zafUnitTests =
                 fromGregorian 2024 12 26
               ],
       testCase "2025" $
-        S.toAscList (maybe S.empty (holidays 2025) (mkCountry "ZAF"))
+        S.toAscList (maybe S.empty (H.holidays (H.Year 2025)) (H.mkCountry "ZAF"))
           @?= [ fromGregorian 2025 1 1,
                 fromGregorian 2025 3 21,
                 fromGregorian 2025 4 18,
