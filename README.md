@@ -1,23 +1,16 @@
 # Holidays
 - Public holidays with Haskell.
-- Because all lazy programmers need holidays!
+- Because lazy programmers need Holidays!
 
-## Features
-- Returns public holidays of a country, excluding weekends.
-
-## Usage
-
+## Examples
+- Importing module: `import Holidays`
+- Get holidays for South Africa in year 2025: `holidays ZAF (Year 2025)`
 
 ## New Countries
 - Create module with ISO 3166 country name. eg. SouthAfrica.hs
 
-## Countries Implemented
+## Supported Countries
 | Country | Implemented |
 | --- | ----------- |
-| BWA | &#x274c; |
-| ZAF | &#x2705; |
-
-## TODO
-- haddock documentation
-- edsl for describing holidays??
-- refactoring less boilerplate to describe??
+| Botswana BWA | &#x274c; |
+| South Africa ZAF | &#x2705; |
