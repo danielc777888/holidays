@@ -25,6 +25,7 @@ library
   exposed-modules:   Holidays
   other-modules:
     Holidays.Base,
+    Holidays.Namibia,
     Holidays.SouthAfrica
   hs-source-dirs:    src
 
@@ -40,4 +41,5 @@ test-suite tests
   main-is:           Main.hs
   other-modules:
     Test.Holidays
+    Test.Holidays.Namibia
     Test.Holidays.SouthAfrica

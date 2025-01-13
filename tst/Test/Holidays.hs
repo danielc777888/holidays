@@ -1,6 +1,6 @@
 module Test.Holidays (
-  propertyBasedTests
- ) where
+  propertyBasedTests,
+) where
 
 import Data.List
 import Data.Set qualified as S
@@ -12,19 +12,19 @@ import Test.Tasty.QuickCheck as QC
 
 propertyBasedTests :: H.Country -> TestTree
 propertyBasedTests country =
-  testGroup
-    ("Holidays property based tests for country " <> show country)
-    [ QC.testProperty "Day always in the same year" $
-        \year ->
-          [year :: Word16]
-            == nub
-              ( map
-                  ( \d ->
-                      let
-                        (year', _, _) = toGregorian d
-                      in
-                        fromIntegral year'
-                  )
-                  (S.toAscList (H.holidays country (H.Year year)))
+  let uniqueYears c y =
+        nub
+          ( map
+              ( \d ->
+                  let
+                    (year', _, _) = toGregorian d
+                  in
+                    fromIntegral year'
               )
-    ]
+              (S.toAscList (H.holidays c (H.Year y)))
+          )
+  in  testGroup
+        ("Holidays property based tests for country " <> show country)
+        [ QC.testProperty "Day always in the same year" $
+            \year -> [year :: Word16] == uniqueYears country year
+        ]

@@ -12,5 +12,10 @@
 ## Supported Countries
 | Country | Implemented |
 | --- | ----------- |
-| Botswana BWA | &#x274c; |
+| Namibia NAM | &#x274c; |
 | South Africa ZAF | &#x2705; |
+
+## TODO
+- perhaps use records to have structure of country data + functions
+- new properties needed. ie. start/end dates, name, regions (areas within country eg. provinces/cities)
+- edsl to easily define dates

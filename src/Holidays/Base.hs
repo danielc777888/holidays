@@ -22,10 +22,14 @@ easterHoliday (Year year) = gregorianEaster (fromIntegral year)
 -- Three-letter country codes
 type ISO_3166_1_Alpha_3 = String
 
-data Country = ZAF deriving (Show)
+data Country
+  = NAM
+  | ZAF
+  deriving (Show)
 
 mkCountry :: ISO_3166_1_Alpha_3 -> Maybe Country
 mkCountry countryCode =
   case countryCode of
+    "NAM" -> Just NAM
     "ZAF" -> Just ZAF
     _ -> Nothing
