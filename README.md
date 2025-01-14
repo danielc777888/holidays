@@ -12,7 +12,7 @@
 ## Supported Countries
 | Country | Implemented |
 | --- | ----------- |
-| Namibia NAM | &#x274c; |
+| Namibia NAM | &#x2705; |
 | South Africa ZAF | &#x2705; |
 
 ## TODO
