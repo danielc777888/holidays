@@ -3,7 +3,6 @@ module Test.Holidays (
 ) where
 
 import Data.List
-import Data.Set qualified as S
 import Data.Time
 import Data.Word
 import Holidays qualified as H
@@ -15,13 +14,13 @@ propertyBasedTests country =
   let uniqueYears c y =
         nub
           ( map
-              ( \d ->
+              ( \h ->
                   let
-                    (year', _, _) = toGregorian d
+                    (year', _, _) = toGregorian (H.day h)
                   in
                     fromIntegral year'
               )
-              (S.toAscList (H.holidays c (H.Year y)))
+              (H.holidays c (H.Year y))
           )
   in  testGroup
         ("Holidays property based tests for country " <> show country)

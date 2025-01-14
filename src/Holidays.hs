@@ -1,19 +1,18 @@
 module Holidays (
-  Country (..),
-  Year (..),
+  HB.Country (..),
+  HB.Holiday (..),
+  HB.Year (..),
   holidays,
-  mkCountry,
+  HB.mkCountry,
 )
 where
 
-import Data.Set qualified as S
-import Data.Time qualified as T
-import Holidays.Base
+import Holidays.Base qualified as HB
 import Holidays.Namibia qualified as NAM
 import Holidays.SouthAfrica qualified as ZAF
 
-holidays :: Country -> Year -> S.Set T.Day
+holidays :: HB.Country -> HB.Year -> [HB.Holiday]
 holidays country =
   case country of
-    NAM -> NAM.holidays
-    ZAF -> ZAF.holidays
+    HB.NAM -> flip HB.holidays NAM.annualHolidays
+    HB.ZAF -> flip HB.holidays ZAF.annualHolidays
