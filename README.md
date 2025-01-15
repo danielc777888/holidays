@@ -32,4 +32,5 @@ main = do
 
 ## TODO
 - refactor filterOnDuration
+- support country regions (provinces/states/cities)
 - edsl to easily define dates
