@@ -3,6 +3,7 @@ module Test.Holidays.Namibia (
   namPropertyBasedTests,
 ) where
 
+import Data.Set qualified as S
 import Data.Time
 import Holidays qualified as H
 import Test.Holidays
@@ -14,7 +15,7 @@ namUnitTests =
   testGroup
     "NAM unit tests"
     [ testCase "2024" $
-        map H.day (H.holidays H.NAM (H.Year 2024))
+        S.toAscList (S.map H.day (H.holidays H.NAM (H.Year 2024)))
           @?= [ fromGregorian 2024 1 1,
                 fromGregorian 2024 3 21,
                 fromGregorian 2024 3 29,
@@ -29,7 +30,7 @@ namUnitTests =
                 fromGregorian 2024 12 26
               ],
       testCase "2025" $
-        map H.day (H.holidays H.NAM (H.Year 2025))
+        S.toAscList (S.map H.day (H.holidays H.NAM (H.Year 2025)))
           @?= [ fromGregorian 2025 1 1,
                 fromGregorian 2025 3 21,
                 fromGregorian 2025 4 18,

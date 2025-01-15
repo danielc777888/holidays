@@ -1,33 +1,40 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_Namibia
 -- https://mict.gov.na/public-holidays
+{-# LANGUAGE OverloadedStrings #-}
 
 module Holidays.Namibia (
-  annualHolidays,
+  holidays,
 ) where
 
 import Data.Time
 
-import Holidays.Base
+import Data.Set qualified as S
+import Holidays.Base hiding (holidays)
 import Holidays.Base qualified as H
 
 -- Namibia public holidays
-annualHolidays :: H.Year -> [H.Holiday]
-annualHolidays year =
+holidays :: H.Year -> S.Set H.Holiday
+holidays year =
   let
-    newYearsDay = Holiday {day = annualHoliday year 1 1, start = H.Year 0, end = Nothing}
-    independenceDay = Holiday {day = annualHoliday year 3 21, start = H.Year 0, end = Nothing}
-    goodFriday = Holiday {day = addDays (-2) (easterHoliday year), start = H.Year 0, end = Nothing}
-    easterMonday = Holiday {day = addDays 1 (easterHoliday year), start = H.Year 0, end = Nothing}
-    workersDay = Holiday {day = annualHoliday year 5 1, start = H.Year 0, end = Nothing}
-    cassingaDay = Holiday {day = annualHoliday year 5 4, start = H.Year 0, end = Nothing}
-    ascensionDay = Holiday {day = addDays 39 (easterHoliday year), start = H.Year 0, end = Nothing}
-    africaDay = Holiday {day = annualHoliday year 5 25, start = H.Year 0, end = Nothing}
-    genocideRemembranceDay = Holiday {day = annualHoliday year 5 28, start = H.Year 2025, end = Just (H.Year 2026)}
-    heroesDay = Holiday {day = annualHoliday year 8 26, start = H.Year 0, end = Nothing}
-    humanRightsDay = Holiday {day = annualHoliday year 12 10, start = H.Year 0, end = Nothing}
-    christmasDay = Holiday {day = annualHoliday year 12 25, start = H.Year 0, end = Nothing}
-    familyDay = Holiday {day = annualHoliday year 12 26, start = H.Year 0, end = Nothing}
-    hs = [newYearsDay, independenceDay, goodFriday, easterMonday, workersDay, cassingaDay, ascensionDay, africaDay, genocideRemembranceDay, heroesDay, humanRightsDay, christmasDay, familyDay]
+    e = easter year
+    (_, gfMonth, gfDay) = toGregorian (addDays (-2) e)
+    (_, emMonth, emDay) = toGregorian (addDays 1 e)
+    (_, adMonth, adDay) = toGregorian (addDays 39 e)
+    hs =
+      [ holiday "New Years Day" 1 1 year,
+        holiday "Independence Day" 21 3 year,
+        holiday "Good Friday" gfDay gfMonth year,
+        holiday "Easter Monday" emDay emMonth year,
+        holiday "Workers Day" 1 5 year,
+        holiday "Cassinga Day" 4 5 year,
+        holiday "Ascension Day" adDay adMonth year,
+        holiday "Africa Day" 25 5 year,
+        duration (holiday "Genocide Remembrance Day" 28 5 year) (Year 2025) (Year 2026),
+        holiday "Heroes Day" 26 8 year,
+        holiday "Human Rights Day" 10 12 year,
+        holiday "Christmas Day" 25 12 year,
+        holiday "Family Day" 26 12 year
+      ]
   in
-    map H.sundayRule hs
+    S.fromAscList (map H.sundayRule hs)

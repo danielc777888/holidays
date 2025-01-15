@@ -17,6 +17,7 @@ common common
   build-depends:
     base ^>=4.17.2.1,
     containers ^>=0.7,
+    text ^>=2.1,
     time >=1.4 && <2
   default-language:  GHC2021
 
@@ -36,7 +37,8 @@ test-suite tests
     holidays,
     tasty >=1.5,
     tasty-hunit >=0.10,
-    tasty-quickcheck >=0.10
+    tasty-quickcheck >=0.10,
+    text ^>=2.1
   hs-source-dirs:    tst
   main-is:           Main.hs
   other-modules:

@@ -1,18 +1,22 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Holidays.Base (
   Country (..),
-  ISO_3166_1_Alpha_3,
+  ISO_3166_1_Alpha_3 (..),
   Year (..),
   Holiday (..),
-  annualHoliday,
+  duration,
   filterOnYear,
-  easterHoliday,
+  easter,
+  holiday,
   holidays,
-  mkCountry,
+  country,
   sundayRule,
 ) where
 
-import Data.List
 import Data.Maybe
+import Data.Set qualified as S
+import Data.Text qualified as TX
 import Data.Time qualified as T
 import Data.Time.Calendar.Easter
 import Data.Word
@@ -20,43 +24,50 @@ import Data.Word
 newtype Year = Year Word16 deriving (Show, Eq, Ord)
 
 data Holiday = Holiday
-  { day :: T.Day,
+  { name :: TX.Text,
+    day :: T.Day,
     start :: Year,
     end :: Maybe Year
   }
-  deriving (Eq, Ord)
+  deriving (Eq, Ord, Show)
 
-annualHoliday :: Year -> T.MonthOfYear -> T.DayOfMonth -> T.Day
-annualHoliday (Year year) = T.fromGregorian (fromIntegral year)
+holiday :: TX.Text -> T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
+holiday n d m (Year y) = Holiday {name = n, day = T.fromGregorian (fromIntegral y) m d, start = Year 0, end = Nothing}
 
-easterHoliday :: Year -> T.Day
-easterHoliday (Year year) = gregorianEaster (fromIntegral year)
+duration :: Holiday -> Year -> Year -> Holiday
+duration h s e = h {start = s, end = Just e}
+
+easter :: Year -> T.Day
+easter (Year year) = gregorianEaster (fromIntegral year)
 
 -- General transformations
 sundayRule :: Holiday -> Holiday
-sundayRule holiday = if T.dayOfWeek d == T.Sunday then holiday {day = T.addDays 1 d} else holiday {day = d}
+sundayRule h = if T.dayOfWeek d == T.Sunday then h {day = T.addDays 1 d} else h {day = d}
   where
-    d = day holiday
+    d = day h
 
-filterOnYear :: [Holiday] -> Year -> [Holiday]
-filterOnYear hs year = filter (\h -> year >= start h && (isNothing (end h) || year < fromJust (end h))) hs
+filterOnYear :: S.Set Holiday -> Year -> S.Set Holiday
+filterOnYear hs year = S.filter (\h -> year >= start h && (isNothing (end h) || year < fromJust (end h))) hs
 
-holidays :: Year -> (Year -> [Holiday]) -> [Holiday]
-holidays year f =
-  let hs = filterOnYear (f year) year
-  in  sort hs
+holidays :: Year -> (Year -> S.Set Holiday) -> S.Set Holiday
+holidays year f = filterOnYear (f year) year
 
 -- Three-letter country codes
-type ISO_3166_1_Alpha_3 = String
-
-data Country
+data ISO_3166_1_Alpha_3
   = NAM
   | ZAF
   deriving (Show)
 
-mkCountry :: ISO_3166_1_Alpha_3 -> Maybe Country
-mkCountry countryCode =
-  case countryCode of
-    "NAM" -> Just NAM
-    "ZAF" -> Just ZAF
+data Country
+  = Country
+  { isoCode :: ISO_3166_1_Alpha_3,
+    regions :: [TX.Text]
+  }
+  deriving (Show)
+
+country :: TX.Text -> [TX.Text] -> Maybe Country
+country isoCode regions =
+  case isoCode of
+    "NAM" -> Just (Country {isoCode = NAM, regions = regions})
+    "ZAF" -> Just (Country {isoCode = ZAF, regions = regions})
     _ -> Nothing
