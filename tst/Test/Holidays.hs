@@ -9,8 +9,8 @@ import Holidays qualified as H
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
 
-propertyBasedTests :: H.ISO_3166_1_Alpha_3 -> TestTree
-propertyBasedTests countryCode =
+propertyBasedTests :: H.Country -> TestTree
+propertyBasedTests country =
   let uniqueYears c y =
         S.map
           ( \h ->
@@ -21,7 +21,7 @@ propertyBasedTests countryCode =
           )
           (H.holidays c (H.Year y))
   in  testGroup
-        ("Holidays property based tests for country " <> show countryCode)
+        ("Holidays property based tests for country " <> show country)
         [ QC.testProperty "Day always in the same year" $
-            \year -> S.singleton (year :: Word16) == uniqueYears countryCode year
+            \year -> S.singleton (year :: Word16) == uniqueYears country year
         ]

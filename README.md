@@ -6,9 +6,19 @@
 
 - Get holidays for South Africa in year 2025:
 ```
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Data.Set qualified as S
 import Holidays qualified as H
 
-H.holidays H.ZAF (H.Year 2025)
+main :: IO ()
+main = do
+  let zaf = H.country "ZAF"
+  let hs = maybe S.empty (`H.holidays` H.Year 2025) zaf
+  print hs
+
 ```
 
 ## New Countries
@@ -21,5 +31,4 @@ H.holidays H.ZAF (H.Year 2025)
 | South Africa ZAF | &#x2705; |
 
 ## TODO
-- new properties needed. ie. start/end dates, name, regions (areas within country eg. provinces/cities)
 - edsl to easily define dates

@@ -6,7 +6,6 @@ module Holidays.Base (
   Year (..),
   Holiday (..),
   duration,
-  filterOnYear,
   easter,
   holiday,
   holidays,
@@ -31,6 +30,19 @@ data Holiday = Holiday
   }
   deriving (Eq, Ord, Show)
 
+-- Three-letter country codes
+data ISO_3166_1_Alpha_3
+  = NAM
+  | ZAF
+  deriving (Show)
+
+data Country
+  = Country
+  { isoCode :: ISO_3166_1_Alpha_3,
+    regions :: S.Set TX.Text
+  }
+  deriving (Show)
+
 holiday :: TX.Text -> T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
 holiday n d m (Year y) = Holiday {name = n, day = T.fromGregorian (fromIntegral y) m d, start = Year 0, end = Nothing}
 
@@ -52,22 +64,9 @@ filterOnYear hs year = S.filter (\h -> year >= start h && (isNothing (end h) || 
 holidays :: Year -> (Year -> S.Set Holiday) -> S.Set Holiday
 holidays year f = filterOnYear (f year) year
 
--- Three-letter country codes
-data ISO_3166_1_Alpha_3
-  = NAM
-  | ZAF
-  deriving (Show)
-
-data Country
-  = Country
-  { isoCode :: ISO_3166_1_Alpha_3,
-    regions :: [TX.Text]
-  }
-  deriving (Show)
-
-country :: TX.Text -> [TX.Text] -> Maybe Country
-country isoCode regions =
+country :: TX.Text -> Maybe Country
+country isoCode =
   case isoCode of
-    "NAM" -> Just (Country {isoCode = NAM, regions = regions})
-    "ZAF" -> Just (Country {isoCode = ZAF, regions = regions})
+    "NAM" -> Just (Country {isoCode = NAM, regions = S.empty})
+    "ZAF" -> Just (Country {isoCode = ZAF, regions = S.empty})
     _ -> Nothing

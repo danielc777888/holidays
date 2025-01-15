@@ -1,8 +1,11 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Test.Holidays.SouthAfrica (
   zafUnitTests,
   zafPropertyBasedTests,
 ) where
 
+import Data.Maybe
 import Data.Set qualified as S
 import Data.Time
 import Holidays qualified as H
@@ -10,12 +13,15 @@ import Test.Holidays
 import Test.Tasty
 import Test.Tasty.HUnit
 
+zaf :: H.Country
+zaf = fromJust (H.country "ZAF")
+
 zafUnitTests :: TestTree
 zafUnitTests =
   testGroup
     "ZAF unit tests"
     [ testCase "2024" $
-        S.toAscList (S.map H.day (H.holidays H.ZAF (H.Year 2024)))
+        S.toAscList (S.map H.day (H.holidays zaf (H.Year 2024)))
           @?= [ fromGregorian 2024 1 1,
                 fromGregorian 2024 3 21,
                 fromGregorian 2024 3 29,
@@ -31,7 +37,7 @@ zafUnitTests =
                 fromGregorian 2024 12 26
               ],
       testCase "2025" $
-        S.toAscList (S.map H.day (H.holidays H.ZAF (H.Year 2025)))
+        S.toAscList (S.map H.day (H.holidays zaf (H.Year 2025)))
           @?= [ fromGregorian 2025 1 1,
                 fromGregorian 2025 3 21,
                 fromGregorian 2025 4 18,
@@ -48,4 +54,4 @@ zafUnitTests =
     ]
 
 zafPropertyBasedTests :: TestTree
-zafPropertyBasedTests = propertyBasedTests H.ZAF
+zafPropertyBasedTests = propertyBasedTests zaf
