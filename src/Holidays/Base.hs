@@ -8,18 +8,17 @@ module Holidays.Base (
   duration,
   easter,
   holiday,
-  holidays,
   country,
   sundayRule,
 ) where
 
-import Data.Maybe
 import Data.Set qualified as S
 import Data.Text qualified as TX
 import Data.Time qualified as T
 import Data.Time.Calendar.Easter
 import Data.Word
 
+-- types
 newtype Year = Year Word16 deriving (Show, Eq, Ord)
 
 data Holiday = Holiday
@@ -30,7 +29,7 @@ data Holiday = Holiday
   }
   deriving (Eq, Ord, Show)
 
--- Three-letter country codes
+-- 3-letter country codes
 data ISO_3166_1_Alpha_3
   = NAM
   | ZAF
@@ -43,30 +42,25 @@ data Country
   }
   deriving (Show)
 
-holiday :: TX.Text -> T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
-holiday n d m (Year y) = Holiday {name = n, day = T.fromGregorian (fromIntegral y) m d, start = Year 0, end = Nothing}
-
-duration :: Holiday -> Year -> Year -> Holiday
-duration h s e = h {start = s, end = Just e}
-
-easter :: Year -> T.Day
-easter (Year year) = gregorianEaster (fromIntegral year)
-
--- General transformations
-sundayRule :: Holiday -> Holiday
-sundayRule h = if T.dayOfWeek d == T.Sunday then h {day = T.addDays 1 d} else h {day = d}
-  where
-    d = day h
-
-filterOnYear :: S.Set Holiday -> Year -> S.Set Holiday
-filterOnYear hs year = S.filter (\h -> year >= start h && (isNothing (end h) || year < fromJust (end h))) hs
-
-holidays :: Year -> (Year -> S.Set Holiday) -> S.Set Holiday
-holidays year f = filterOnYear (f year) year
-
+-- constructors
 country :: TX.Text -> Maybe Country
 country isoCode =
   case isoCode of
     "NAM" -> Just (Country {isoCode = NAM, regions = S.empty})
     "ZAF" -> Just (Country {isoCode = ZAF, regions = S.empty})
     _ -> Nothing
+
+holiday :: TX.Text -> T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
+holiday n d m (Year y) = Holiday {name = n, day = T.fromGregorian (fromIntegral y) m d, start = Year 0, end = Nothing}
+
+easter :: Year -> T.Day
+easter (Year year) = gregorianEaster (fromIntegral year)
+
+-- general transformations
+duration :: Holiday -> Year -> Year -> Holiday
+duration h s e = h {start = s, end = Just e}
+
+sundayRule :: Holiday -> Holiday
+sundayRule h = if T.dayOfWeek d == T.Sunday then h {day = T.addDays 1 d} else h {day = d}
+  where
+    d = day h

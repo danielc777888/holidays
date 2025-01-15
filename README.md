@@ -1,6 +1,6 @@
 # Holidays
 - Public holidays with Haskell.
-- Because lazy programmers need Holidays!
+- Because lazy programmers need holidays!
 
 ## Examples
 
@@ -31,4 +31,5 @@ main = do
 | South Africa ZAF | &#x2705; |
 
 ## TODO
+- refactor filterOnDuration
 - edsl to easily define dates

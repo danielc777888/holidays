@@ -3,7 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Holidays.SouthAfrica (
-  holidays,
+  zafHolidays,
 ) where
 
 import Data.Time
@@ -13,8 +13,8 @@ import Holidays.Base hiding (holidays)
 import Holidays.Base qualified as H
 
 -- Annual holidays
-holidays :: H.Year -> S.Set H.Holiday
-holidays year =
+zafHolidays :: H.Year -> S.Set H.Holiday
+zafHolidays year =
   let
     e = easter year
     (_, fdMonth, fdDay) = toGregorian e

@@ -4,18 +4,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Holidays.Namibia (
-  holidays,
+  namHolidays,
 ) where
 
 import Data.Time
 
 import Data.Set qualified as S
-import Holidays.Base hiding (holidays)
+import Holidays.Base
 import Holidays.Base qualified as H
 
 -- Namibia public holidays
-holidays :: H.Year -> S.Set H.Holiday
-holidays year =
+namHolidays :: H.Year -> S.Set H.Holiday
+namHolidays year =
   let
     e = easter year
     (_, gfMonth, gfDay) = toGregorian (addDays (-2) e)

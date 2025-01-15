@@ -1,20 +1,25 @@
 module Holidays (
-  HB.Country (..),
-  HB.ISO_3166_1_Alpha_3 (..),
-  HB.Holiday (..),
-  HB.Year (..),
+  Country (..),
+  ISO_3166_1_Alpha_3 (..),
+  Holiday (..),
+  Year (..),
   holidays,
-  HB.country,
+  country,
 )
 where
 
+import Data.Maybe
 import Data.Set qualified as S
-import Holidays.Base qualified as HB
-import Holidays.Namibia qualified as NAM
-import Holidays.SouthAfrica qualified as ZAF
+import Holidays.Base
+import Holidays.Namibia
+import Holidays.SouthAfrica
 
-holidays :: HB.Country -> HB.Year -> S.Set HB.Holiday
-holidays country =
-  case HB.isoCode country of
-    HB.NAM -> flip HB.holidays NAM.holidays
-    HB.ZAF -> flip HB.holidays ZAF.holidays
+holidays :: Country -> Year -> S.Set Holiday
+holidays c year =
+  let hs = case isoCode c of
+        NAM -> namHolidays year
+        ZAF -> zafHolidays year
+  in  filterOnDuration hs year
+
+filterOnDuration :: S.Set Holiday -> Year -> S.Set Holiday
+filterOnDuration hs year = S.filter (\h -> year >= start h && (isNothing (end h) || year < fromJust (end h))) hs
