@@ -5,7 +5,6 @@ module Test.Holidays.Namibia (
   namPropertyBasedTests,
 ) where
 
-import Data.Maybe
 import Data.Set qualified as S
 import Data.Time
 import Holidays qualified as H
@@ -13,15 +12,12 @@ import Test.Holidays
 import Test.Tasty
 import Test.Tasty.HUnit
 
-nam :: H.Country
-nam = fromJust (H.country "NAM")
-
 namUnitTests :: TestTree
 namUnitTests =
   testGroup
     "NAM unit tests"
     [ testCase "2024" $
-        S.toAscList (S.map H.day (H.holidays nam (H.Year 2024)))
+        S.toAscList (H.holidays "NAM" 2024)
           @?= [ fromGregorian 2024 1 1,
                 fromGregorian 2024 3 21,
                 fromGregorian 2024 3 29,
@@ -36,7 +32,7 @@ namUnitTests =
                 fromGregorian 2024 12 26
               ],
       testCase "2025" $
-        S.toAscList (S.map H.day (H.holidays nam (H.Year 2025)))
+        S.toAscList (H.holidays "NAM" 2025)
           @?= [ fromGregorian 2025 1 1,
                 fromGregorian 2025 3 21,
                 fromGregorian 2025 4 18,
@@ -54,4 +50,4 @@ namUnitTests =
     ]
 
 namPropertyBasedTests :: TestTree
-namPropertyBasedTests = propertyBasedTests nam
+namPropertyBasedTests = propertyBasedTests "NAM"

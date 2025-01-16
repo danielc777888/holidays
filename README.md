@@ -10,13 +10,11 @@
 
 module Main where
 
-import Data.Set qualified as S
-import Holidays qualified as H
+import Holidays
 
 main :: IO ()
 main = do
-  let zaf = H.country "ZAF"
-  let hs = maybe S.empty (`H.holidays` H.Year 2025) zaf
+  let hs = holidays "ZAF" 2025
   print hs
 
 ```
@@ -31,6 +29,4 @@ main = do
 | South Africa ZAF | &#x2705; |
 
 ## TODO
-- refactor filterOnDuration
-- support country regions (provinces/states/cities)
 - edsl to easily define dates

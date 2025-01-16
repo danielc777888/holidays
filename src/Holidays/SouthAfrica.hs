@@ -1,6 +1,5 @@
 -- references:
--- https://www.gov.za/about-sa/public-holidays
-{-# LANGUAGE OverloadedStrings #-}
+-- https://en.wikipedia.org/wiki/Public_holidays_in_South_Africa
 
 module Holidays.SouthAfrica (
   zafHolidays,
@@ -9,30 +8,45 @@ module Holidays.SouthAfrica (
 import Data.Time
 
 import Data.Set qualified as S
-import Holidays.Base hiding (holidays)
+import Holidays.Base
 import Holidays.Base qualified as H
 
 -- Annual holidays
-zafHolidays :: H.Year -> S.Set H.Holiday
+zafHolidays :: H.Year -> S.Set Day
 zafHolidays year =
   let
-    e = easter year
-    (_, fdMonth, fdDay) = toGregorian e
-    (_, gfMonth, gfDay) = toGregorian (addDays (-2) e)
+    newYearsDay = holiday 1 1 year
+
+    goodFriday = Holiday {day = addDays (-2) (easter year), bounds = defaultBounds}
+    familyDay = Holiday {day = easter year, bounds = defaultBounds}
+
+    humanRightsDay = holiday 21 3 year
+    freedomDay = holiday 27 4 year
+    workersDay = holiday 1 5 year
+
+    generalElections2024 = boundedHoliday 29 5 year (2024, 2024)
+
+    youthDay = holiday 16 6 year
+    nationalWomensDay = holiday 9 8 year
+    heritageDay = holiday 24 9 year
+    dayOfReconciliation = holiday 16 12 year
+    christmasDay = holiday 25 12 year
+    dayOfGoodwill = holiday 26 12 year
+
     hs =
-      [ holiday "New Years Day" 1 1 year,
-        holiday "Human Rights Day" 21 3 year,
-        holiday "Family Day" fdDay fdMonth year,
-        holiday "Good Friday" gfDay gfMonth year,
-        holiday "Freedom Day" 27 4 year,
-        holiday "Workers Day" 1 5 year,
-        duration (holiday "General Elections 2024" 29 5 year) (Year 2024) (Year 2025),
-        holiday "Youth Day" 16 6 year,
-        holiday "National Womens Day" 9 8 year,
-        holiday "Heritage Day" 24 9 year,
-        holiday "Day Of Reconciliation" 16 12 year,
-        holiday "Christmas Day" 25 12 year,
-        holiday "Day Of Goodwill" 26 12 year
+      [ newYearsDay,
+        goodFriday,
+        familyDay,
+        humanRightsDay,
+        freedomDay,
+        workersDay,
+        generalElections2024,
+        youthDay,
+        nationalWomensDay,
+        heritageDay,
+        dayOfReconciliation,
+        christmasDay,
+        dayOfGoodwill
       ]
   in
-    S.fromAscList (map H.sundayRule hs)
+    narrowHolidays $ map (\h -> h {day = sundayRule (day h)}) hs

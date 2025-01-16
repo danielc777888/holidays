@@ -1,14 +1,13 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.Base (
-  Country (..),
-  ISO_3166_1_Alpha_3 (..),
-  Year (..),
   Holiday (..),
-  duration,
+  ISO_3166_1_Alpha_3,
+  Year,
+  defaultBounds,
+  narrowHolidays,
   easter,
   holiday,
-  country,
+  inBounds,
+  boundedHoliday,
   sundayRule,
 ) where
 
@@ -19,48 +18,37 @@ import Data.Time.Calendar.Easter
 import Data.Word
 
 -- types
-newtype Year = Year Word16 deriving (Show, Eq, Ord)
-
-data Holiday = Holiday
-  { name :: TX.Text,
-    day :: T.Day,
-    start :: Year,
-    end :: Maybe Year
-  }
-  deriving (Eq, Ord, Show)
+type Year = Word16
 
 -- 3-letter country codes
-data ISO_3166_1_Alpha_3
-  = NAM
-  | ZAF
-  deriving (Show)
+type ISO_3166_1_Alpha_3 = TX.Text
 
-data Country
-  = Country
-  { isoCode :: ISO_3166_1_Alpha_3,
-    regions :: S.Set TX.Text
+data Holiday = Holiday
+  { day :: T.Day,
+    bounds :: (Year, Year)
   }
   deriving (Show)
 
--- constructors
-country :: TX.Text -> Maybe Country
-country isoCode =
-  case isoCode of
-    "NAM" -> Just (Country {isoCode = NAM, regions = S.empty})
-    "ZAF" -> Just (Country {isoCode = ZAF, regions = S.empty})
-    _ -> Nothing
+defaultBounds :: (Year, Year)
+defaultBounds = (minBound :: Year, maxBound :: Year)
 
-holiday :: TX.Text -> T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
-holiday n d m (Year y) = Holiday {name = n, day = T.fromGregorian (fromIntegral y) m d, start = Year 0, end = Nothing}
+holiday :: T.DayOfMonth -> T.MonthOfYear -> Year -> Holiday
+holiday d m y = Holiday {day = T.fromGregorian (fromIntegral y) m d, bounds = (minBound :: Year, maxBound :: Year)}
+
+narrowHolidays :: [Holiday] -> S.Set T.Day
+narrowHolidays = S.fromList . map day . filter inBounds
+
+boundedHoliday :: T.DayOfMonth -> T.MonthOfYear -> Year -> (Year, Year) -> Holiday
+boundedHoliday d m y (start, end) = Holiday {day = T.fromGregorian (fromIntegral y) m d, bounds = (start, end)}
 
 easter :: Year -> T.Day
-easter (Year year) = gregorianEaster (fromIntegral year)
+easter year = gregorianEaster (fromIntegral year)
+
+inBounds :: Holiday -> Bool
+inBounds (Holiday day (start, end)) =
+  let (year, _, _) = T.toGregorian day
+  in  year >= fromIntegral start && year <= fromIntegral end
 
 -- general transformations
-duration :: Holiday -> Year -> Year -> Holiday
-duration h s e = h {start = s, end = Just e}
-
-sundayRule :: Holiday -> Holiday
-sundayRule h = if T.dayOfWeek d == T.Sunday then h {day = T.addDays 1 d} else h {day = d}
-  where
-    d = day h
+sundayRule :: T.Day -> T.Day
+sundayRule day = if T.dayOfWeek day == T.Sunday then T.addDays 1 day else day
