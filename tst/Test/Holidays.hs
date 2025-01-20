@@ -4,7 +4,6 @@ module Test.Holidays (
 
 import Data.Set qualified as S
 import Data.Time
-import Data.Word
 import Holidays qualified as H
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
@@ -17,11 +16,11 @@ propertyBasedTests countryCode =
               let
                 (year', _, _) = toGregorian h
               in
-                fromIntegral year'
+                year'
           )
           (H.holidays c y)
   in  testGroup
         ("Holidays property based tests for country " <> show countryCode)
         [ QC.testProperty "Day always in the same year" $
-            \year -> S.singleton (year :: Word16) == uniqueYears countryCode year
+            \year -> S.singleton year == uniqueYears countryCode year
         ]

@@ -7,36 +7,31 @@ module Holidays.Namibia (
 
 import Data.Set qualified as S
 import Data.Time
+import Data.Time qualified as T
 
 import Holidays.Base
-import Holidays.Base qualified as H
+import Holidays.DateFinder
 
 -- Namibia public holidays
-namHolidays :: H.Year -> S.Set Day
+namHolidays :: T.Year -> S.Set Day
 namHolidays year =
   let
-    newYearsDay = holiday 1 1 year
-    independenceDay = holiday 21 3 year
-
-    goodFriday = Holiday {day = addDays (-2) (easter year), bounds = defaultBounds}
-    easterDay = Holiday {day = easter year, bounds = defaultBounds}
-    ascensionDay = Holiday {day = addDays 39 (easter year), bounds = defaultBounds}
-
-    workersDay = holiday 1 5 year
-    cassingaDay = holiday 4 5 year
-    africaDay = holiday 25 5 year
-    genocideRemembranceDay = boundedHoliday 28 5 year (2025, maxBound :: H.Year)
-
-    heroesDay = holiday 26 8 year
-    humanRightsDay = holiday 10 12 year
-    christmasDay = holiday 25 12 year
-    familyDay = holiday 26 12 year
-
+    newYearsDay = jan 1
+    independenceDay = mar 21
+    goodFriday = (1 `fri`) . before . easter -- 1st friday before easter
+    ascensionDay = (39 `days`) . after . easter
+    workersDay = may 1
+    cassingaDay = may 4
+    africaDay = may 25
+    genocideRemembranceDay = years (>= 2025) . may 28
+    heroesDay = aug 26
+    humanRightsDay = dec 10
+    familyDay = dec 26
     hs =
       [ newYearsDay,
         independenceDay,
         goodFriday,
-        easterDay,
+        easter,
         ascensionDay,
         workersDay,
         cassingaDay,
@@ -44,8 +39,9 @@ namHolidays year =
         genocideRemembranceDay,
         heroesDay,
         humanRightsDay,
-        christmasDay,
+        christmas,
         familyDay
       ]
+    hs' = map (\h -> h year) hs -- apply year
   in
-    narrowHolidays $ map (\h -> h {day = sundayRule (day h)}) hs
+    S.fromList $ map sundayRule $ filter valid hs'

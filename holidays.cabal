@@ -25,8 +25,9 @@ library
   import:            common
   exposed-modules:   Holidays
   other-modules:
-    Holidays.Base,
-    Holidays.Namibia,
+    Holidays.Base
+    Holidays.DateFinder
+    Holidays.Namibia
     Holidays.SouthAfrica
   hs-source-dirs:    src
 

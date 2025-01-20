@@ -2,8 +2,7 @@
 
 module Holidays (
   ISO_3166_1_Alpha_3,
-  Holiday (..),
-  H.Year,
+  day,
   holidays,
 )
 where
@@ -14,7 +13,7 @@ import Holidays.Base as H
 import Holidays.Namibia
 import Holidays.SouthAfrica
 
-holidays :: ISO_3166_1_Alpha_3 -> H.Year -> S.Set Day
+holidays :: ISO_3166_1_Alpha_3 -> Year -> S.Set Day
 holidays countryCode year =
   case countryCode of
     "NAM" -> namHolidays year
