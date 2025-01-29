@@ -1,5 +1,5 @@
 module Test.Holidays (
-  propertyBasedTests,
+  countryPropTests,
 ) where
 
 import Data.Set qualified as S
@@ -8,8 +8,8 @@ import Holidays qualified as H
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
 
-propertyBasedTests :: H.ISO_3166_1_Alpha_3 -> TestTree
-propertyBasedTests countryCode =
+countryPropTests :: H.ISO_3166_1_Alpha_3 -> TestTree
+countryPropTests countryCode =
   let uniqueYears c y =
         S.map
           ( \h ->

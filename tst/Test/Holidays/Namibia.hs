@@ -2,7 +2,7 @@
 
 module Test.Holidays.Namibia (
   namUnitTests,
-  namPropertyBasedTests,
+  namPropTests,
 ) where
 
 import Data.Set qualified as S
@@ -48,5 +48,5 @@ namUnitTests =
               ]
     ]
 
-namPropertyBasedTests :: TestTree
-namPropertyBasedTests = propertyBasedTests "NAM"
+namPropTests :: TestTree
+namPropTests = countryPropTests "NAM"

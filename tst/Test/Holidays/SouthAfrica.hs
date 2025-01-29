@@ -2,7 +2,7 @@
 
 module Test.Holidays.SouthAfrica (
   zafUnitTests,
-  zafPropertyBasedTests,
+  zafPropTests,
 ) where
 
 import Data.Set qualified as S
@@ -48,5 +48,5 @@ zafUnitTests =
               ]
     ]
 
-zafPropertyBasedTests :: TestTree
-zafPropertyBasedTests = propertyBasedTests "ZAF"
+zafPropTests :: TestTree
+zafPropTests = countryPropTests "ZAF"
