@@ -1,8 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+{- |
+This module determines public holidays based on country code and year.
+-}
 module Holidays (
   ISO_3166_1_Alpha_3,
-  day,
   holidays,
 )
 where
@@ -17,6 +19,16 @@ import Holidays.SouthAfrica
 import Holidays.UnitedKingdom
 import Holidays.UnitedStates
 
+{- |
+Returns a set of public holidays based on the country code (ISO_3166_1_Alpha_3) and a specific year.
+If a country is not supported an empty set is returned.
+
+Example:
+
+@
+hs = holidays "USA" 2025
+@
+-}
 holidays :: ISO_3166_1_Alpha_3 -> Year -> S.Set Day
 holidays countryCode year =
   case countryCode of

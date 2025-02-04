@@ -21,19 +21,24 @@ main = do
 ```
 - Describing holidays:
 ```
-newYearsDay = jan 1
-independenceDay = mar 21
-goodFriday = (1 `fri`) . before . easter -- 1st friday before easter
-easterDay = easter
-ascensionDay = (39 `days`) . after . easter
-workersDay = may 1
-cassingaDay = may 4
-africaDay = may 25
-genocideRemembranceDay = years (>= 2025) . may 28
-heroesDay = aug 26
-humanRightsDay = dec 10
-christmasDay = christmas
-familyDay = dec 26
+namHolidays :: (DateFinders, DateTransforms)
+namHolidays =
+  ( [ newYears,
+      mar 21, -- independence day
+      goodFriday,
+      easter,
+      (39 `days`) . after . easter, -- ascension day
+      may 1, -- workers day
+      may 4, -- cassinga day
+      may 25, -- africa day
+      aug 26, -- heroes day
+      dec 10, -- human rights day
+      christmas,
+      boxingDay, -- family day
+      years (>= 2025) . may 28 -- genocide remembrance day
+    ],
+    [sundayRule]
+  )
 ```
 
 ## New Countries

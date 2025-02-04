@@ -2,15 +2,22 @@ cabal-version: 3.8
 
 name: holidays
 version: 0.1.0.0
-synopsis: A library for country public holidays
+synopsis: Library for country public holidays
+description:
+  Library for country public holidays. Provides a small EDSL to describe holidays for a country.
+category: Date
 homepage: https://github.com/danielc777888/holidays
 license: MIT
 license-file: LICENSE
 author: Daniel Cabral
 maintainer: danielc777888@gmail.com
-extra-source-files: CHANGELOG.md
+extra-doc-files: CHANGELOG.md
 
 tested-with: GHC == 9.4.8
+
+source-repository head
+  type: git
+  location: git://github.com/danielc777888/holidays.git
 
 common common
   ghc-options: -Wall
