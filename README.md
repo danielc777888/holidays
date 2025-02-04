@@ -1,7 +1,7 @@
 # Holidays
 - Public holidays with Haskell.
 - Because lazy programmers need holidays!
-- Provides a small EDSL for finding dates.
+- Provides a small EDSL for finding dates. (Very useful if you are a lonely programmer)
 
 ## Examples
 
