@@ -1,7 +1,6 @@
 # Holidays
 - Public holidays with Haskell.
 - Because lazy programmers need holidays!
-- Useful for billing systems in determining when to submit payments.
 - Provides a small EDSL for finding dates.
 
 ## Examples

@@ -24,9 +24,12 @@ module Holidays.DateFinder (
   nov,
   dec,
   easter,
+  goodFriday,
   christmas,
+  boxingDay,
   newYears,
   nextOpenDay,
+  DateFinders,
 ) where
 
 import Data.Maybe
@@ -38,6 +41,8 @@ import Holidays.Base
 
 data Direction = Past | Future
 
+type DateFinders = [Year -> Day]
+
 -- common dates
 newYears :: Year -> Day
 newYears = jan 1
@@ -45,8 +50,14 @@ newYears = jan 1
 easter :: Year -> Day
 easter = gregorianEaster
 
+goodFriday :: Year -> Day
+goodFriday = (1 `fri`) . before . easter
+
 christmas :: Year -> Day
 christmas = dec 25
+
+boxingDay :: Year -> Day
+boxingDay = dec 26
 
 -- utils
 nullDate :: Day

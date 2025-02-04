@@ -5,43 +5,24 @@ module Holidays.SouthAfrica (
   zafHolidays,
 ) where
 
-import Data.Time
-
-import Data.Set qualified as S
 import Holidays.DateFinder
 import Holidays.DateTransform
 
--- Annual holidays
-zafHolidays :: Year -> S.Set Day
-zafHolidays year =
-  let
-    newYearsDay = jan 1
-    goodFriday = (1 `fri`) . before . easter
-    familyDay = easter
-    humanRightsDay = mar 21
-    freedomDay = apr 27
-    workersDay = may 1
-    generalElections2024 = years (== 2024) . may 29
-    youthDay = jun 16
-    nationalWomensDay = aug 9
-    heritageDay = sep 24
-    dayOfReconciliation = dec 16
-    dayOfGoodwill = dec 26
-    hs =
-      [ newYearsDay,
-        goodFriday,
-        familyDay,
-        humanRightsDay,
-        freedomDay,
-        workersDay,
-        generalElections2024,
-        youthDay,
-        nationalWomensDay,
-        heritageDay,
-        dayOfReconciliation,
-        christmas,
-        dayOfGoodwill
-      ]
-    hs' = map (\h -> h year) hs -- apply year
-  in
-    S.fromList $ map sundayRule $ filter valid hs'
+zafHolidays :: (DateFinders, DateTransforms)
+zafHolidays =
+  ( [ newYears,
+      goodFriday,
+      easter, -- family day
+      mar 21, -- human right day
+      apr 27, -- freedom day
+      may 1, -- workers day
+      jun 16, -- youth day
+      aug 9, -- womens day
+      sep 24, -- heritage day
+      dec 16, -- day of reconciliation
+      christmas,
+      boxingDay, -- day of goodwill
+      years (== 2024) . may 29 -- general elections 2024
+    ],
+    [sundayRule]
+  )

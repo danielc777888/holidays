@@ -5,43 +5,25 @@ module Holidays.Namibia (
   namHolidays,
 ) where
 
-import Data.Set qualified as S
-import Data.Time
-import Data.Time qualified as T
-
 import Holidays.DateFinder
 import Holidays.DateTransform
 
 -- Namibia public holidays
-namHolidays :: T.Year -> S.Set Day
-namHolidays year =
-  let
-    newYearsDay = jan 1
-    independenceDay = mar 21
-    goodFriday = (1 `fri`) . before . easter -- 1st friday before easter
-    ascensionDay = (39 `days`) . after . easter
-    workersDay = may 1
-    cassingaDay = may 4
-    africaDay = may 25
-    genocideRemembranceDay = years (>= 2025) . may 28
-    heroesDay = aug 26
-    humanRightsDay = dec 10
-    familyDay = dec 26
-    hs =
-      [ newYearsDay,
-        independenceDay,
-        goodFriday,
-        easter,
-        ascensionDay,
-        workersDay,
-        cassingaDay,
-        africaDay,
-        genocideRemembranceDay,
-        heroesDay,
-        humanRightsDay,
-        christmas,
-        familyDay
-      ]
-    hs' = map (\h -> h year) hs -- apply year
-  in
-    S.fromList $ map sundayRule $ filter valid hs'
+namHolidays :: (DateFinders, DateTransforms)
+namHolidays =
+  ( [ newYears,
+      mar 21, -- independence day
+      goodFriday,
+      easter,
+      (39 `days`) . after . easter, -- ascension day
+      may 1, -- workers day
+      may 4, -- cassinga day
+      may 25, -- africa day
+      aug 26, -- heroes day
+      dec 10, -- human rights day
+      christmas,
+      boxingDay, -- family day
+      years (>= 2025) . may 28 -- genocide remembrance day
+    ],
+    [sundayRule]
+  )

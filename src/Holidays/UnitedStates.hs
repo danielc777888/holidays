@@ -5,38 +5,22 @@ module Holidays.UnitedStates (
   usaHolidays,
 ) where
 
-import Data.Time
-
-import Data.Set qualified as S
 import Holidays.DateFinder
+import Holidays.DateTransform
 
--- Annual holidays
-usaHolidays :: Year -> S.Set Day
-usaHolidays year =
-  let
-    newYearsDay = jan 1
-    birthdayMartinLutherKing = (3 `mon`) . after . jan 1
-    birthdayWashington = (3 `mon`) . after . feb 1
-    memorialDay = (1 `mon`) . before . jun 1 -- last monday of may
-    juneteenthIndependenceDay = jun 19
-    independenceDay = jul 4
-    laborDay = (1 `mon`) . after . sep 1
-    columbusDay = (2 `mon`) . after . oct 1
-    veteransDay = nov 11
-    thanksgivingDay = (4 `thurs`) . after . nov 1
-    hs =
-      [ newYearsDay,
-        birthdayMartinLutherKing,
-        birthdayWashington,
-        memorialDay,
-        juneteenthIndependenceDay,
-        independenceDay,
-        laborDay,
-        columbusDay,
-        veteransDay,
-        thanksgivingDay,
-        christmas
-      ]
-    hs' = map (\h -> h year) hs -- apply year
-  in
-    S.fromList $ filter valid hs'
+usaHolidays :: (DateFinders, DateTransforms)
+usaHolidays =
+  ( [ newYears,
+      (3 `mon`) . after . jan 1, -- Martin Luther King's birthday
+      (3 `mon`) . after . feb 1, -- Georges Washington's birthday
+      (1 `mon`) . before . jun 1, -- memorial day, last monday of may
+      jun 19, -- juneteenth independence day
+      jul 4, -- independence day
+      (1 `mon`) . after . sep 1, -- labor day
+      (2 `mon`) . after . oct 1, -- columbus day
+      nov 11, -- veterans day,
+      (4 `thurs`) . after . nov 1, -- thanksgiving day
+      christmas
+    ],
+    []
+  )
