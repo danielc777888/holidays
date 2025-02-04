@@ -277,7 +277,7 @@ familyDay = dec 26
 | Uganda UGA | ❌ |
 | Ukraine UKR | ❌ |
 | United Arab Emirates ARE | ❌ |
-| United Kingdom GBR | ❌ |
+| United Kingdom GBR | ✅ |
 | United States USA | ✅ |
 | United States Minor Outlying Islands UMI | ❌ |
 | Uruguay URY | ❌ |
@@ -292,8 +292,3 @@ familyDay = dec 26
 | Yemen YEM | ❌ |
 | Zambia ZMB | ❌ |
 | Zimbabwe ZWE | ❌ |
-
-## TODO
-- haddock
-- more tests for Holidays.Base|DateFinder
-- more countries

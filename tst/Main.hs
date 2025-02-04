@@ -2,6 +2,7 @@ module Main where
 
 import Test.Holidays.Namibia
 import Test.Holidays.SouthAfrica
+import Test.Holidays.UnitedKingdom
 import Test.Holidays.UnitedStates
 import Test.Tasty
 
@@ -12,10 +13,7 @@ tests :: TestTree
 tests = testGroup "Holidays tests" [unitTests, propTests]
 
 unitTests :: TestTree
-unitTests = testGroup "Unit tests" [namUnitTests, usaUnitTests, zafUnitTests]
+unitTests = testGroup "Unit tests" [gbrUnitTests, namUnitTests, usaUnitTests, zafUnitTests]
 
 propTests :: TestTree
-propTests = testGroup "Holidays property based tests" [countryPropTests]
-
-countryPropTests :: TestTree
-countryPropTests = testGroup "Countries property based tests" [namPropTests, usaPropTests, zafPropTests]
+propTests = testGroup "Holidays property based tests" [gbrPropTests, namPropTests, usaPropTests, zafPropTests]

@@ -8,8 +8,8 @@ module Holidays.SouthAfrica (
 import Data.Time
 
 import Data.Set qualified as S
-import Holidays.Base
 import Holidays.DateFinder
+import Holidays.DateTransform
 
 -- Annual holidays
 zafHolidays :: Year -> S.Set Day

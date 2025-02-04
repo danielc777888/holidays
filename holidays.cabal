@@ -27,8 +27,10 @@ library
   other-modules:
     Holidays.Base
     Holidays.DateFinder
+    Holidays.DateTransform
     Holidays.Namibia
     Holidays.SouthAfrica
+    Holidays.UnitedKingdom
     Holidays.UnitedStates
   hs-source-dirs: src
 
@@ -45,7 +47,7 @@ test-suite tests
   main-is: Main.hs
   other-modules:
     Test.Holidays
-    Test.Holidays.Base
     Test.Holidays.Namibia
     Test.Holidays.SouthAfrica
+    Test.Holidays.UnitedKingdom
     Test.Holidays.UnitedStates

@@ -25,9 +25,12 @@ module Holidays.DateFinder (
   dec,
   easter,
   christmas,
+  newYears,
+  nextOpenDay,
 ) where
 
 import Data.Maybe
+import Data.Set qualified as S
 import Data.Time
 
 import Data.Time.Calendar.Easter
@@ -36,6 +39,9 @@ import Holidays.Base
 data Direction = Past | Future
 
 -- common dates
+newYears :: Year -> Day
+newYears = jan 1
+
 easter :: Year -> Day
 easter = gregorianEaster
 
@@ -95,9 +101,12 @@ dec :: DayOfMonth -> Year -> Day
 dec d y = day y December d
 
 -- time travel
+
+-- exclusive of before day
 before :: Day -> Integer -> Maybe DayOfWeek -> Day
 before = timeTravel Past
 
+-- inclusive of after day
 after :: Day -> Integer -> Maybe DayOfWeek -> Day
 after = timeTravel Future
 
@@ -105,7 +114,7 @@ timeTravel :: Direction -> Day -> Integer -> Maybe DayOfWeek -> Day
 timeTravel Past d n w
   | isNothing w = addDays (negate n) d
   | otherwise =
-      let diff = fromIntegral $ dayOfWeekDiff (dayOfWeek d) (fromJust w)
+      let diff = fromIntegral $ if dayOfWeek d == fromJust w then 7 else dayOfWeekDiff (dayOfWeek d) (fromJust w)
       in  addDays (negate diff - ((n - 1) * 7)) d
 timeTravel Future d n w
   | isNothing w = addDays n d
@@ -134,3 +143,9 @@ fri n f = f n (Just Friday)
 
 sat :: Integer -> (Integer -> Maybe DayOfWeek -> Day) -> Day
 sat n f = f n (Just Saturday)
+
+nextOpenDay :: [DayOfWeek] -> S.Set Day -> Day -> Day
+nextOpenDay ds s d
+  | dayOfWeek d `elem` ds = nextOpenDay ds s (addDays 1 d)
+  | S.member d s = nextOpenDay ds s (addDays 1 d)
+  | otherwise = d

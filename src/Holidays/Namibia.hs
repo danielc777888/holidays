@@ -9,8 +9,8 @@ import Data.Set qualified as S
 import Data.Time
 import Data.Time qualified as T
 
-import Holidays.Base
 import Holidays.DateFinder
+import Holidays.DateTransform
 
 -- Namibia public holidays
 namHolidays :: T.Year -> S.Set Day
