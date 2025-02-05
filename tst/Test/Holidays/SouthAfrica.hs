@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Test.Holidays.SouthAfrica (
-  zafUnitTests,
-  zafPropTests,
+  unitTests,
+  propTests,
 ) where
 
 import Data.Set qualified as S
@@ -11,12 +11,12 @@ import Test.Holidays
 import Test.Tasty
 import Test.Tasty.HUnit
 
-zafUnitTests :: TestTree
-zafUnitTests =
+unitTests :: TestTree
+unitTests =
   testGroup
     "ZAF unit tests"
     [ testCase "2024" $
-        S.toAscList (holidays "ZAF" 2024)
+        S.toAscList (holidays "ZAF" [] 2024)
           @?= [ day 2024 1 1,
                 day 2024 3 21,
                 day 2024 3 29,
@@ -32,7 +32,7 @@ zafUnitTests =
                 day 2024 12 26
               ],
       testCase "2025" $
-        S.toAscList (holidays "ZAF" 2025)
+        S.toAscList (holidays "ZAF" [] 2025)
           @?= [ day 2025 1 1,
                 day 2025 3 21,
                 day 2025 4 18,
@@ -48,5 +48,5 @@ zafUnitTests =
               ]
     ]
 
-zafPropTests :: TestTree
-zafPropTests = countryPropTests "ZAF"
+propTests :: TestTree
+propTests = countryPropTests "ZAF" []

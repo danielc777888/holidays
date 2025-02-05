@@ -1,9 +1,10 @@
 module Main where
 
-import Test.Holidays.Namibia
-import Test.Holidays.SouthAfrica
-import Test.Holidays.UnitedKingdom
-import Test.Holidays.UnitedStates
+import Test.Holidays.Germany qualified as DEU
+import Test.Holidays.Namibia qualified as NAM
+import Test.Holidays.SouthAfrica qualified as ZAF
+import Test.Holidays.UnitedKingdom qualified as GBR
+import Test.Holidays.UnitedStates qualified as USA
 import Test.Tasty
 
 main :: IO ()
@@ -13,7 +14,7 @@ tests :: TestTree
 tests = testGroup "Holidays tests" [unitTests, propTests]
 
 unitTests :: TestTree
-unitTests = testGroup "Unit tests" [gbrUnitTests, namUnitTests, usaUnitTests, zafUnitTests]
+unitTests = testGroup "Unit tests" [DEU.unitTests, GBR.unitTests, NAM.unitTests, USA.unitTests, ZAF.unitTests]
 
 propTests :: TestTree
-propTests = testGroup "Holidays property based tests" [gbrPropTests, namPropTests, usaPropTests, zafPropTests]
+propTests = testGroup "Holidays property based tests" [DEU.propTests, GBR.propTests, NAM.propTests, USA.propTests, ZAF.propTests]

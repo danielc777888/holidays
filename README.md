@@ -15,7 +15,7 @@ import Holidays
 
 main :: IO ()
 main = do
-  let hs = holidays "NAM" 2025
+  let hs = holidays "NAM" [] 2025
   print hs
 
 ```
@@ -23,21 +23,21 @@ main = do
 ```
 namHolidays :: (DateFinders, DateTransforms)
 namHolidays =
-  ( [ newYears,
+  ( [ newYearsDay,
       mar 21, -- independence day
       goodFriday,
-      easter,
+      easterSunday,
       (39 `days`) . after . easter, -- ascension day
       may 1, -- workers day
       may 4, -- cassinga day
       may 25, -- africa day
       aug 26, -- heroes day
       dec 10, -- human rights day
-      christmas,
+      christmasDay,
       boxingDay, -- family day
       years (>= 2025) . may 28 -- genocide remembrance day
     ],
-    [sundayRule]
+    [sundayRule] -- any holiday on a sunday moves to a monday
   )
 ```
 
@@ -282,7 +282,7 @@ namHolidays =
 | Ukraine UKR | ❌ |
 | United Arab Emirates ARE | ❌ |
 | United Kingdom GBR | ✅ |
-| United States USA | ✅ |
+| United States USA | ✅  |
 | United States Minor Outlying Islands UMI | ❌ |
 | Uruguay URY | ❌ |
 | Uzbekistan UZB | ❌ |

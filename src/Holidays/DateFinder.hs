@@ -23,11 +23,14 @@ module Holidays.DateFinder (
   oct,
   nov,
   dec,
-  easter,
+  easterSunday,
+  easterMonday,
   goodFriday,
-  christmas,
+  christmasDay,
   boxingDay,
-  newYears,
+  newYearsDay,
+  ascensionDay,
+  workersDay,
   nextOpenDay,
   DateFinders,
 ) where
@@ -44,20 +47,29 @@ data Direction = Past | Future
 type DateFinders = [Year -> Day]
 
 -- common dates
-newYears :: Year -> Day
-newYears = jan 1
+newYearsDay :: Year -> Day
+newYearsDay = jan 1
 
-easter :: Year -> Day
-easter = gregorianEaster
+easterSunday :: Year -> Day
+easterSunday = gregorianEaster
+
+easterMonday :: Year -> Day
+easterMonday = addDays 1 . easterSunday
 
 goodFriday :: Year -> Day
-goodFriday = (1 `fri`) . before . easter
+goodFriday = (1 `fri`) . before . easterSunday
 
-christmas :: Year -> Day
-christmas = dec 25
+christmasDay :: Year -> Day
+christmasDay = dec 25
 
 boxingDay :: Year -> Day
 boxingDay = dec 26
+
+ascensionDay :: Year -> Day
+ascensionDay = (39 `days`) . after . easterSunday
+
+workersDay :: Year -> Day
+workersDay = may 1
 
 -- utils
 nullDate :: Day

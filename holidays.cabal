@@ -30,11 +30,13 @@ common common
 
 library
   import: common
-  exposed-modules: Holidays
+  exposed-modules:
+    Holidays
   other-modules:
     Holidays.Base
     Holidays.DateFinder
     Holidays.DateTransform
+    Holidays.Germany
     Holidays.Namibia
     Holidays.SouthAfrica
     Holidays.UnitedKingdom
@@ -54,6 +56,7 @@ test-suite tests
   main-is: Main.hs
   other-modules:
     Test.Holidays
+    Test.Holidays.Germany
     Test.Holidays.Namibia
     Test.Holidays.SouthAfrica
     Test.Holidays.UnitedKingdom
