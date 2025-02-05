@@ -29,8 +29,8 @@ Allowed to specify regions in a country to further determine holidays.
 Examples:
 
 @
-holidays ""DEU"" [""BW"",""BY"",""BE""] 2025 -- Germany and various states
-holidays ""USA"" [] 2025
+holidays \"DEU\" [\"BW\",\"BY\",\"BE\"] 2025 -- Germany and various states
+holidays \"USA\" [] 2025
 @
 -}
 holidays :: ISO_3166_1_Alpha_3 -> [Region] -> Year -> S.Set Day
