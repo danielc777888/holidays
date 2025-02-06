@@ -8,7 +8,6 @@ module Holidays.Namibia (
 import Holidays.DateFinder
 import Holidays.DateTransform
 
--- Namibia public holidays
 holidays :: (DateFinders, DateTransforms)
 holidays =
   ( [ newYearsDay,

@@ -21,14 +21,21 @@ main = do
 ```
 - Describing holidays:
 ```
-namHolidays :: (DateFinders, DateTransforms)
-namHolidays =
+module Holidays.Namibia (
+  holidays,
+) where
+
+import Holidays.DateFinder
+import Holidays.DateTransform
+
+holidays :: (DateFinders, DateTransforms)
+holidays =
   ( [ newYearsDay,
       mar 21, -- independence day
       goodFriday,
       easterSunday,
-      (39 `days`) . after . easter, -- ascension day
-      may 1, -- workers day
+      ascensionDay,
+      workersDay,
       may 4, -- cassinga day
       may 25, -- africa day
       aug 26, -- heroes day
@@ -37,7 +44,7 @@ namHolidays =
       boxingDay, -- family day
       years (>= 2025) . may 28 -- genocide remembrance day
     ],
-    [sundayRule] -- any holiday on a sunday moves to a monday
+    [sundayRule]
   )
 ```
 
