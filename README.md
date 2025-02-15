@@ -2,6 +2,7 @@
 - Public holidays with Haskell.
 - Because lazy programmers need holidays!
 - Provides a small EDSL for finding dates. (Very useful if you are a lonely programmer)
+- Useful for billing systems.
 
 ## Examples
 
@@ -15,13 +16,13 @@ import Holidays
 
 main :: IO ()
 main = do
-  let hs = holidays "NAM" [] 2025
+  let hs = holidays "USA" [] 2025
   print hs
 
 ```
 - Describing holidays:
 ```
-module Holidays.Namibia (
+module Holidays.UnitedStates (
   holidays,
 ) where
 
@@ -31,20 +32,18 @@ import Holidays.DateTransform
 holidays :: (DateFinders, DateTransforms)
 holidays =
   ( [ newYearsDay,
-      mar 21, -- independence day
-      goodFriday,
-      easterSunday,
-      ascensionDay,
-      workersDay,
-      may 4, -- cassinga day
-      may 25, -- africa day
-      aug 26, -- heroes day
-      dec 10, -- human rights day
-      christmasDay,
-      boxingDay, -- family day
-      years (>= 2025) . may 28 -- genocide remembrance day
+      (3 `mon`) . after . jan 1, -- Martin Luther King's birthday
+      (3 `mon`) . after . feb 1, -- Georges Washington's birthday
+      (1 `mon`) . before . jun 1, -- memorial day, last monday of may
+      jun 19, -- juneteenth independence day
+      jul 4, -- independence day
+      (1 `mon`) . after . sep 1, -- labor day
+      (2 `mon`) . after . oct 1, -- columbus day
+      nov 11, -- veterans day,
+      (4 `thurs`) . after . nov 1, -- thanksgiving day
+      christmasDay
     ],
-    [sundayRule]
+    []
   )
 ```
 

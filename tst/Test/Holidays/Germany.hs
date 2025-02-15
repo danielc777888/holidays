@@ -12,8 +12,8 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 -- german states
-regions :: [Region] 
-regions = ["BW","BY","BE","BB","HB","HH","HE","MV","NI","NW","RP","SL","SN","ST","SH","TH"]
+regions :: [Region]
+regions = ["BW", "BY", "BE", "BB", "HB", "HH", "HE", "MV", "NI", "NW", "RP", "SL", "SN", "ST", "SH", "TH"]
 
 unitTests :: TestTree
 unitTests =
