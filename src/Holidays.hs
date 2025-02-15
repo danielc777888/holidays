@@ -16,6 +16,7 @@ import Holidays.Base
 import Holidays.DateFinder
 import Holidays.DateTransform
 import Holidays.Germany qualified as DEU
+import Holidays.Mozambique qualified as MOZ
 import Holidays.Namibia qualified as NAM
 import Holidays.SouthAfrica qualified as ZAF
 import Holidays.UnitedKingdom qualified as GBR
@@ -38,6 +39,7 @@ holidays countryCode regions year =
   case countryCode of
     "DEU" -> DEU.holidays regions `apply` year
     "GBR" -> GBR.holidays `apply` year
+    "MOZ" -> MOZ.holidays `apply` year
     "NAM" -> NAM.holidays `apply` year
     "USA" -> USA.holidays `apply` year
     "ZAF" -> ZAF.holidays `apply` year
