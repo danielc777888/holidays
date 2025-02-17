@@ -1,7 +1,7 @@
 module Holidays.DateFinder (
   after,
   before,
-  valid,
+  nextOpenDay,
   days,
   years,
   sun,
@@ -31,8 +31,6 @@ module Holidays.DateFinder (
   newYearsDay,
   ascensionDay,
   workersDay,
-  nextOpenDay,
-  DateFinders,
 ) where
 
 import Data.Maybe
@@ -43,8 +41,6 @@ import Data.Time.Calendar.Easter
 import Holidays.Base
 
 data Direction = Past | Future
-
-type DateFinders = [Year -> Day]
 
 -- common dates
 newYearsDay :: Year -> Day
@@ -71,18 +67,11 @@ ascensionDay = (39 `days`) . after . easterSunday
 workersDay :: Year -> Day
 workersDay = may 1
 
--- utils
-nullDate :: Day
-nullDate = day 0 0 0
-
-valid :: Day -> Bool
-valid = not . (nullDate ==)
-
 days :: Integer -> (Integer -> Maybe DayOfWeek -> Day) -> Day
 days n f = f n Nothing
 
 years :: (Year -> Bool) -> Day -> Day
-years f d = if f (fromIntegral y) then d else nullDate
+years f d = if f (fromIntegral y) then d else nullDay
   where
     (y, _, _) = toGregorian d
 
@@ -125,14 +114,15 @@ dec d y = day y December d
 
 -- time travel
 
--- exclusive of before day
+-- | Time-travel to the past in number of days. Excludes the specified Day.
 before :: Day -> Integer -> Maybe DayOfWeek -> Day
 before = timeTravel Past
 
--- inclusive of after day
+-- | Time-travel to the past in number of days. Includes the specified Day.
 after :: Day -> Integer -> Maybe DayOfWeek -> Day
 after = timeTravel Future
 
+-- | Time-travels to the past or future by adding a number of days.
 timeTravel :: Direction -> Day -> Integer -> Maybe DayOfWeek -> Day
 timeTravel Past d n w
   | isNothing w = addDays (negate n) d
@@ -167,8 +157,11 @@ fri n f = f n (Just Friday)
 sat :: Integer -> (Integer -> Maybe DayOfWeek -> Day) -> Day
 sat n f = f n (Just Saturday)
 
-nextOpenDay :: [DayOfWeek] -> S.Set Day -> Day -> Day
+-- | Get the next open day by skipping days which are already holidays or specified days of the week.
+nextOpenDay :: [DayOfWeek] -> S.Set Holiday -> Holiday -> Holiday
 nextOpenDay ds s d
-  | dayOfWeek d `elem` ds = nextOpenDay ds s (addDays 1 d)
-  | S.member d s = nextOpenDay ds s (addDays 1 d)
+  | dayOfWeek d' `elem` ds = nextOpenDay ds s (d {holidayValue = addDays 1 d'})
+  | S.member d s = nextOpenDay ds s (d {holidayValue = addDays 1 d'})
   | otherwise = d
+  where
+    d' = holidayValue d

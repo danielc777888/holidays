@@ -9,11 +9,13 @@ module Holidays.Germany (
   holidays,
 ) where
 
+import Data.Time
+
 import Holidays.Base
 import Holidays.DateFinder
 import Holidays.DateTransform
 
-holidays :: [Region] -> (DateFinders, DateTransforms)
+holidays :: [Region] -> ([Year -> Holiday], [DateTransform])
 holidays regions =
   ( concat
       [ federalHolidays,
@@ -22,20 +24,20 @@ holidays regions =
     []
   )
 
-federalHolidays :: DateFinders
+federalHolidays :: [Year -> Holiday]
 federalHolidays =
-  [ newYearsDay,
-    goodFriday,
-    easterMonday,
-    workersDay, -- labour day
-    ascensionDay,
-    (50 `days`) . after . easterSunday, -- whit monday
-    oct 3, -- germany unity day
-    christmasDay,
-    boxingDay -- second day of christmas
+  [ hday "new_years_day" . newYearsDay,
+    hday "good_friday" . goodFriday,
+    hday "easter_monday" . easterMonday,
+    hday "labour_day" . workersDay,
+    hday "ascension_day" . ascensionDay,
+    hday "whit_monday" . (50 `days`) . after . easterSunday,
+    hday "germany_unity_day" . oct 3,
+    hday "christmas_day" . christmasDay,
+    hday "second_day_of_christmas" . boxingDay
   ]
 
-regionalHolidays :: [Region] -> DateFinders
+regionalHolidays :: [Region] -> [Year -> Holiday]
 regionalHolidays =
   concatMap
     ( \r -> case r of
@@ -58,96 +60,114 @@ regionalHolidays =
         _ -> []
     )
 
-badenWurttembergHolidays :: DateFinders
+-- common holidays
+epiphany :: Year -> Holiday
+epiphany = hday "epiphany" . jan 6
+
+corpusChristi :: Year -> Holiday
+corpusChristi = hday "corpus_christi" . (60 `days`) . after . easterSunday
+
+allSaintsDay :: Year -> Holiday
+allSaintsDay = hday "all_saints_day" . nov 1
+
+assumptionDay :: Year -> Holiday
+assumptionDay = hday "assumption_day" . aug 15
+
+internationalWomensDay :: Year -> Holiday
+internationalWomensDay = hday "international_womens_day" . mar 8
+
+reformationDay :: Year -> Holiday
+reformationDay = hday "reformation_day" . oct 31
+
+badenWurttembergHolidays :: [Year -> Holiday]
 badenWurttembergHolidays =
-  [ jan 6, -- epiphany
-    (60 `days`) . after . easterSunday, -- corpus christi
-    nov 1 -- all saints day
+  [ epiphany,
+    corpusChristi,
+    allSaintsDay
   ]
 
-bavariaHolidays :: DateFinders
+bavariaHolidays :: [Year -> Holiday]
 bavariaHolidays =
-  [ jan 6, -- epiphany
-    (60 `days`) . after . easterSunday, -- corpus christi
-    aug 15, -- assumption day
-    nov 1 -- all saints day
+  [ epiphany,
+    corpusChristi,
+    assumptionDay,
+    allSaintsDay
   ]
 
-berlinHolidays :: DateFinders
+berlinHolidays :: [Year -> Holiday]
 berlinHolidays =
-  [ mar 8, -- international womens day
-    nov 1, -- all saints day
-    years (== 2025) . may 8 -- 80th anniversary of the end of world war 2
+  [ internationalWomensDay,
+    allSaintsDay,
+    hday "80th_anniversary_of_end_of_world_war_2" . years (== 2025) . may 8
   ]
 
-brandenburgHolidays :: DateFinders
+brandenburgHolidays :: [Year -> Holiday]
 brandenburgHolidays =
-  [ easterSunday,
-    (49 `days`) . after . easterSunday, -- whit sunday
-    oct 31 -- reformation day
+  [ hday "easter_sunday" . easterSunday,
+    hday "whit_sunday" . (49 `days`) . after . easterSunday,
+    reformationDay
   ]
 
-bremenHolidays :: DateFinders
+bremenHolidays :: [Year -> Holiday]
 bremenHolidays =
-  [ oct 31 -- reformation day
+  [ reformationDay
   ]
 
-hamburgHolidays :: DateFinders
+hamburgHolidays :: [Year -> Holiday]
 hamburgHolidays =
-  [ oct 31 -- reformation day
+  [ reformationDay
   ]
 
-hesseHolidays :: DateFinders
+hesseHolidays :: [Year -> Holiday]
 hesseHolidays =
-  [ (60 `days`) . after . easterSunday -- corpus christi
-  ]
+  [corpusChristi]
 
-mecklenburgVorpommernHolidays :: DateFinders
+mecklenburgVorpommernHolidays :: [Year -> Holiday]
 mecklenburgVorpommernHolidays =
-  [ mar 8, -- international womens day
-    oct 31 -- reformation day
+  [ internationalWomensDay,
+    reformationDay
   ]
 
-lowerSaxonyHolidays :: DateFinders
+lowerSaxonyHolidays :: [Year -> Holiday]
 lowerSaxonyHolidays =
-  [ oct 31 -- reformation day
+  [ reformationDay
   ]
 
-northRhineWestphaliaHolidays :: DateFinders
+northRhineWestphaliaHolidays :: [Year -> Holiday]
 northRhineWestphaliaHolidays =
-  [ (60 `days`) . after . easterSunday, -- corpus christi
-    nov 1 -- all saints day
+  [ corpusChristi,
+    allSaintsDay
   ]
 
-rhinelandPalatinateHolidays :: DateFinders
+rhinelandPalatinateHolidays :: [Year -> Holiday]
 rhinelandPalatinateHolidays =
-  [ (60 `days`) . after . easterSunday, -- corpus christi
-    nov 1 -- all saints day
+  [ corpusChristi,
+    allSaintsDay
   ]
 
-saarlandHolidays :: DateFinders
+saarlandHolidays :: [Year -> Holiday]
 saarlandHolidays =
-  [ (60 `days`) . after . easterSunday, -- corpus christi
-    aug 15, -- assumption day
-    nov 1 -- all saints day
+  [ corpusChristi,
+    assumptionDay,
+    allSaintsDay
   ]
 
-saxonyHolidays :: DateFinders
+saxonyHolidays :: [Year -> Holiday]
 saxonyHolidays =
-  [ (2 `wed`) . before . (4 `sun`) . before . christmasDay -- repentance and prayer day
+  [ hday "repentance_and_prayer_day" . (2 `wed`) . before . (4 `sun`) . before . christmasDay
   ]
 
-saxonyAnhaltHolidays :: DateFinders
+saxonyAnhaltHolidays :: [Year -> Holiday]
 saxonyAnhaltHolidays =
-  [ jan 6, -- epiphany
-    oct 31 -- reformation day
+  [ epiphany,
+    reformationDay
   ]
 
-schleswigHolsteinHolidays :: DateFinders
+schleswigHolsteinHolidays :: [Year -> Holiday]
 schleswigHolsteinHolidays =
   []
 
-thuringiaHolidays :: DateFinders
+thuringiaHolidays :: [Year -> Holiday]
 thuringiaHolidays =
-  [ sep 20 -- world childrens day
+  [ hday "worlds_children_day" . sep 20
   ]

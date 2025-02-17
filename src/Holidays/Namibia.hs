@@ -1,28 +1,32 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_Namibia
+{-# LANGUAGE OverloadedStrings #-}
 
 module Holidays.Namibia (
   holidays,
 ) where
 
-import Holidays.DateFinder
-import Holidays.DateTransform
+import Data.Time
 
-holidays :: (DateFinders, DateTransforms)
+import Holidays.Base
+import Holidays.DateFinder
+import Holidays.DateTransform (DateTransform, sundayRule)
+
+holidays :: ([Year -> Holiday], [DateTransform])
 holidays =
-  ( [ newYearsDay,
-      mar 21, -- independence day
-      goodFriday,
-      easterSunday,
-      ascensionDay,
-      workersDay,
-      may 4, -- cassinga day
-      may 25, -- africa day
-      aug 26, -- heroes day
-      dec 10, -- human rights day
-      christmasDay,
-      boxingDay, -- family day
-      years (>= 2025) . may 28 -- genocide remembrance day
+  ( [ hday "new_years_day" . newYearsDay,
+      hday "independence_day" . mar 21,
+      hday "good_friday" . goodFriday,
+      hday "easter_sunday" . easterSunday,
+      hday "ascension_day" . ascensionDay,
+      hday "workers_day" . workersDay,
+      hday "cassinga_day" . may 4,
+      hday "africa_day" . may 25,
+      hday "heroes_day" . aug 26,
+      hday "human_rights_day" . dec 10,
+      hday "christmas_day" . christmasDay,
+      hday "family_day" . boxingDay,
+      hday "genocide_remembrance_day" . years (>= 2025) . may 28
     ],
     [sundayRule]
   )

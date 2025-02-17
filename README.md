@@ -2,11 +2,10 @@
 - Public holidays with Haskell.
 - Because lazy programmers need holidays!
 - Provides a small EDSL for finding dates. (Very useful if you are a lonely programmer)
-- Useful for billing systems.
 
 ## Examples
 
-- Get holidays for Namibia in year 2025:
+- Get holidays for USA in year 2025:
 ```
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -22,33 +21,40 @@ main = do
 ```
 - Describing holidays:
 ```
+{-# LANGUAGE OverloadedStrings #-}
+
 module Holidays.UnitedStates (
   holidays,
 ) where
 
+import Data.Time
+
+import Holidays.Base
 import Holidays.DateFinder
 import Holidays.DateTransform
 
-holidays :: (DateFinders, DateTransforms)
+holidays :: ([Year -> Holiday], [DateTransform])
 holidays =
-  ( [ newYearsDay,
-      (3 `mon`) . after . jan 1, -- Martin Luther King's birthday
-      (3 `mon`) . after . feb 1, -- Georges Washington's birthday
-      (1 `mon`) . before . jun 1, -- memorial day, last monday of may
-      jun 19, -- juneteenth independence day
-      jul 4, -- independence day
-      (1 `mon`) . after . sep 1, -- labor day
-      (2 `mon`) . after . oct 1, -- columbus day
-      nov 11, -- veterans day,
-      (4 `thurs`) . after . nov 1, -- thanksgiving day
-      christmasDay
+  ( [ hday "new_years_day" . newYearsDay,
+      hday "martin_luther_kings_birthday" . (3 `mon`) . after . jan 1,
+      hday "george_washingtons_birthday" . (3 `mon`) . after . feb 1,
+      hday "memorial_day" . (1 `mon`) . before . jun 1,
+      hday "juneteenth_independence_day" . jun 19,
+      hday "independence_day" . jul 4,
+      hday "labor_day" . (1 `mon`) . after . sep 1,
+      hday "columbus_day" . (2 `mon`) . after . oct 1,
+      hday "veterans_day" . nov 11,
+      hday "thanksgiving_day" . (4 `thurs`) . after . nov 1,
+      hday "christmas_day" . christmasDay
     ],
     []
   )
 ```
 
 ## New Countries
-- Create module with ISO 3166 country name. eg. SouthAfrica.hs
+- Create module with _ISO 3166_ country name. eg. _SouthAfrica.hs_
+- Add country pattern match to _Holidays_ module
+- Add unit/property based tests to _Test.Holidays_ module
 
 ## Supported Countries
 | Country | Implemented |

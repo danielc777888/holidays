@@ -1,7 +1,7 @@
 cabal-version: 3.8
 
 name: holidays
-version: 0.1.0.0
+version: 0.2.0.0
 synopsis: Library for country public holidays
 description:
   Library for country public holidays. Provides a small EDSL to describe holidays for a country.

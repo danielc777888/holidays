@@ -18,7 +18,7 @@ countryPropTests countryCode regions =
         S.map
           ( \h ->
               let
-                (year', _, _) = toGregorian h
+                (year', _, _) = toGregorian (H.holidayValue h)
               in
                 year'
           )
