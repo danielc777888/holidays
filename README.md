@@ -56,6 +56,10 @@ holidays =
 - Add country pattern match to _Holidays_ module
 - Add unit/property based tests to _Test.Holidays_ module
 
+## Regions
+- A country may have regions which could be states, provinces, cities, etc.
+- For the available region codes see: [REGIONS.md](REGIONS.md)
+
 ## Supported Countries
 | Country | Implemented |
 | --- | ----------- |
