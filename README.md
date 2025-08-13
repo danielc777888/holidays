@@ -312,3 +312,9 @@ holidays =
 | Yemen YEM | ❌ |
 | Zambia ZMB | ❌ |
 | Zimbabwe ZWE | ❌ |
+
+## TODO
+- Make Haskel2010 default language, need to make lib for accessible.
+- Make better use of haskells type system. Make invalid states unrepresentable.
+- Support other calendars, not just Gregorian. ie. Chinese, Hebrew, Islamic, etc.
+- Implement other countries.
