@@ -6,7 +6,7 @@ module Test.Holidays.Mozambique (
 ) where
 
 import Data.List
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Holidays
 import Test.Holidays
 import Test.Tasty
@@ -43,3 +43,4 @@ propTests = countryPropTests "MOZ" []
       hday "armed_forces_day" . sep 25,
       hday "day_of_peace_and_reconciliation" . oct 4,
       hday "family_day" . christmasDay -}
+

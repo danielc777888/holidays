@@ -3,9 +3,9 @@ module Test.Holidays (
   day,
 ) where
 
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Data.Time
-import Holidays qualified as H
+import qualified Holidays as H
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
 

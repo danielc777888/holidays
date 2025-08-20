@@ -1,11 +1,11 @@
 module Main where
 
-import Test.Holidays.Germany qualified as DEU
-import Test.Holidays.Mozambique qualified as MOZ
-import Test.Holidays.Namibia qualified as NAM
-import Test.Holidays.SouthAfrica qualified as ZAF
-import Test.Holidays.UnitedKingdom qualified as GBR
-import Test.Holidays.UnitedStates qualified as USA
+import qualified Test.Holidays.Germany as DEU
+import qualified Test.Holidays.Mozambique as MOZ
+import qualified Test.Holidays.Namibia as NAM
+import qualified Test.Holidays.SouthAfrica as ZAF
+import qualified Test.Holidays.UnitedKingdom as GBR
+import qualified Test.Holidays.UnitedStates as USA
 import Test.Tasty
 
 main :: IO ()
@@ -19,3 +19,4 @@ unitTests = testGroup "Unit tests" [DEU.unitTests, GBR.unitTests, MOZ.unitTests,
 
 propTests :: TestTree
 propTests = testGroup "Holidays property based tests" [DEU.propTests, GBR.propTests, MOZ.propTests, NAM.propTests, USA.propTests, ZAF.propTests]
+

@@ -12,16 +12,16 @@ module Holidays (
 )
 where
 
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Data.Time
 import Holidays.Base
 import Holidays.DateTransform
-import Holidays.Germany qualified as DEU
-import Holidays.Mozambique qualified as MOZ
-import Holidays.Namibia qualified as NAM
-import Holidays.SouthAfrica qualified as ZAF
-import Holidays.UnitedKingdom qualified as GBR
-import Holidays.UnitedStates qualified as USA
+import qualified Holidays.Germany as DEU
+import qualified Holidays.Mozambique as MOZ
+import qualified Holidays.Namibia as NAM
+import qualified Holidays.SouthAfrica as ZAF
+import qualified Holidays.UnitedKingdom as GBR
+import qualified Holidays.UnitedStates as USA
 
 {- |
 Returns a set of public holidays based on the country code (ISO_3166_1_Alpha_3) and a specific year.
@@ -51,3 +51,4 @@ apply :: ([Year -> Holiday], [DateTransform]) -> Year -> S.Set Holiday
 apply (hs, transforms) year =
   let validDays = filter (validDay . holidayValue) $ map (\d -> d year) hs -- apply year and filter out invalid days
   in  foldr (\d ds -> S.insert (foldr (\t d' -> t ds d') d transforms) ds) S.empty validDays -- apply transforms to valid days
+

@@ -34,7 +34,7 @@ module Holidays.DateFinder (
 ) where
 
 import Data.Maybe
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Data.Time
 
 import Data.Time.Calendar.Easter
@@ -165,3 +165,4 @@ nextOpenDay ds s d
   | otherwise = d
   where
     d' = holidayValue d
+

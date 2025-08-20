@@ -6,7 +6,7 @@ module Test.Holidays.UnitedStates (
 ) where
 
 import Data.List
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Holidays
 import Test.Holidays
 import Test.Tasty
@@ -34,3 +34,4 @@ unitTests =
 
 propTests :: TestTree
 propTests = countryPropTests "USA" []
+

@@ -8,7 +8,7 @@ module Holidays.Base (
   validDay,
 ) where
 
-import Data.Text qualified as T
+import qualified Data.Text as T
 import Data.Time
 
 -- | 3-letter country codes.
@@ -39,3 +39,4 @@ nullDay = day 0 0 0
 -- | Day is valid if its not a nullDate
 validDay :: Day -> Bool
 validDay = not . (nullDay ==)
+

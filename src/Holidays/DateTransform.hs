@@ -4,7 +4,7 @@ module Holidays.DateTransform (
   DateTransform,
 ) where
 
-import Data.Set qualified as S
+import qualified Data.Set as S
 import Data.Time
 import Holidays.Base
 import Holidays.DateFinder
