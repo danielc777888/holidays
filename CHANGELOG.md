@@ -10,3 +10,6 @@
 - new Holiday data type
 - use "holidayKey" for a textual description
 - new countries supported: MOZ
+
+## **0.3.0.0** - 2025-08-20
+- default language is Haskell2010
