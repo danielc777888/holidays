@@ -51,4 +51,3 @@ apply :: ([Year -> Holiday], [DateTransform]) -> Year -> S.Set Holiday
 apply (hs, transforms) year =
   let validDays = filter (validDay . holidayValue) $ map (\d -> d year) hs -- apply year and filter out invalid days
   in  foldr (\d ds -> S.insert (foldr (\t d' -> t ds d') d transforms) ds) S.empty validDays -- apply transforms to valid days
-

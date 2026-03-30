@@ -47,4 +47,3 @@ unitTests =
 
 propTests :: TestTree
 propTests = countryPropTests "DEU" regions
-

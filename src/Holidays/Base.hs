@@ -39,4 +39,3 @@ nullDay = day 0 0 0
 -- | Day is valid if its not a nullDate
 validDay :: Day -> Bool
 validDay = not . (nullDay ==)
-

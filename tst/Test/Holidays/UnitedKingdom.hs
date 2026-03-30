@@ -42,4 +42,3 @@ unitTests =
 
 propTests :: TestTree
 propTests = countryPropTests "GBR" []
-

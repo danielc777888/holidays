@@ -19,4 +19,3 @@ unitTests = testGroup "Unit tests" [DEU.unitTests, GBR.unitTests, MOZ.unitTests,
 
 propTests :: TestTree
 propTests = testGroup "Holidays property based tests" [DEU.propTests, GBR.propTests, MOZ.propTests, NAM.propTests, USA.propTests, ZAF.propTests]
-

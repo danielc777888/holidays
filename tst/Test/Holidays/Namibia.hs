@@ -51,4 +51,3 @@ unitTests =
 
 propTests :: TestTree
 propTests = countryPropTests "NAM" []
-

@@ -165,4 +165,3 @@ nextOpenDay ds s d
   | otherwise = d
   where
     d' = holidayValue d
-

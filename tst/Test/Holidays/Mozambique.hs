@@ -43,4 +43,3 @@ propTests = countryPropTests "MOZ" []
       hday "armed_forces_day" . sep 25,
       hday "day_of_peace_and_reconciliation" . oct 4,
       hday "family_day" . christmasDay -}
-
