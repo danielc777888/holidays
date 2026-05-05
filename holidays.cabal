@@ -1,6 +1,6 @@
 cabal-version: 3.0
 name: holidays
-version: 0.3.0.0
+version: 0.3.0.1
 synopsis: Library for country public holidays
 description:
   Public holidays with Haskell.
@@ -18,7 +18,7 @@ tested-with: ghc ==9.8.1
 
 source-repository head
   type: git
-  location: git://github.com/danielc777888/holidays.git
+  location: https://github.com/danielc777888/holidays.git
 
 common common
   ghc-options: -Wall

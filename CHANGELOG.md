@@ -13,3 +13,6 @@
 
 ## **0.3.0.0** - 2025-08-20
 - default language is Haskell2010
+
+## **0.3.0.1** - 2026-05-05
+- make OverloadedStrings a default extension
