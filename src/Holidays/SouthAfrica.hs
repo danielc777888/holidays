@@ -1,7 +1,5 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_South_Africa
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.SouthAfrica (
   holidays,
 ) where

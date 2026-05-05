@@ -1,7 +1,5 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_Namibia
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.Namibia (
   holidays,
 ) where

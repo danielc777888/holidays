@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Test.Holidays.Germany (
   unitTests,
   propTests,

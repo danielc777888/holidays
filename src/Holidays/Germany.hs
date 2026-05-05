@@ -3,8 +3,6 @@
   https://en.wikipedia.org/wiki/Public_holidays_in_Germany
   https://publicholidays.de/
 --}
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.Germany (
   holidays,
 ) where

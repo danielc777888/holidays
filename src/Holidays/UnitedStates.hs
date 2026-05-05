@@ -1,7 +1,5 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Federal_holidays_in_the_United_States
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.UnitedStates (
   holidays,
 ) where

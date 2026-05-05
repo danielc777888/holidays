@@ -7,8 +7,6 @@
 
 - Get holidays for USA in year 2025:
 ```
-{-# LANGUAGE OverloadedStrings #-}
-
 module Main where
 
 import Holidays
@@ -21,8 +19,6 @@ main = do
 ```
 - Describing holidays:
 ```
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.UnitedStates (
   holidays,
 ) where
@@ -312,3 +308,6 @@ holidays =
 | Yemen YEM | ❌ |
 | Zambia ZMB | ❌ |
 | Zimbabwe ZWE | ❌ |
+
+## TODO
+- more countries

@@ -1,7 +1,5 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.UnitedKingdom (
   holidays,
 ) where

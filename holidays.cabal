@@ -3,7 +3,9 @@ name: holidays
 version: 0.3.0.0
 synopsis: Library for country public holidays
 description:
-  Library for country public holidays. Provides a small EDSL to describe holidays for a country.
+  Public holidays with Haskell.
+  Because lazy programmers need holidays!
+  Provides a small EDSL for finding dates. (Very useful if you are a lonely programmer)
 
 category: Date
 homepage: https://github.com/danielc777888/holidays
@@ -27,6 +29,7 @@ common common
     time >=1.4 && <2,
 
   default-language: Haskell2010
+  default-extensions: OverloadedStrings
 
 library
   import: common

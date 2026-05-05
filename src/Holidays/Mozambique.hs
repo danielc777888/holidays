@@ -1,7 +1,5 @@
 -- references:
 -- https://en.wikipedia.org/wiki/Public_holidays_in_Mozambique
-{-# LANGUAGE OverloadedStrings #-}
-
 module Holidays.Mozambique (
   holidays,
 ) where
