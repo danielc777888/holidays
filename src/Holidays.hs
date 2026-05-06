@@ -15,6 +15,7 @@ import Data.Time
 import Holidays.Base
 import Holidays.DateTransform
 import qualified Holidays.Germany as DEU
+import qualified Holidays.Israel as ISR
 import qualified Holidays.Mozambique as MOZ
 import qualified Holidays.Namibia as NAM
 import qualified Holidays.SouthAfrica as ZAF
@@ -38,6 +39,7 @@ holidays countryCode regions year =
   case countryCode of
     "DEU" -> DEU.holidays regions `apply` year
     "GBR" -> GBR.holidays `apply` year
+    "ISR" -> S.union (ISR.holidays `apply` year) (ISR.sabbaths year)
     "MOZ" -> MOZ.holidays `apply` year
     "NAM" -> NAM.holidays `apply` year
     "USA" -> USA.holidays `apply` year

@@ -118,7 +118,7 @@ dec d y = day y December d
 before :: Day -> Integer -> Maybe DayOfWeek -> Day
 before = timeTravel Past
 
--- | Time-travel to the past in number of days. Includes the specified Day.
+-- | Time-travel to the future in number of days. Includes the specified Day.
 after :: Day -> Integer -> Maybe DayOfWeek -> Day
 after = timeTravel Future
 
