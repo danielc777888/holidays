@@ -15,7 +15,7 @@ unitTests =
   testGroup
     "NAM unit tests"
     [ testCase "2024" $
-        sortOn holidayValue (S.toAscList (holidays "NAM" [] 2024))
+        sortOn holidayValue (S.toAscList (holidays NAM [] 2024))
           @?= [ hday "new_years_day" (day 2024 1 1),
                 hday "independence_day" (day 2024 3 21),
                 hday "good_friday" (day 2024 3 29),
@@ -30,7 +30,7 @@ unitTests =
                 hday "family_day" (day 2024 12 26)
               ],
       testCase "2025" $
-        sortOn holidayValue (S.toAscList (holidays "NAM" [] 2025))
+        sortOn holidayValue (S.toAscList (holidays NAM [] 2025))
           @?= [ hday "new_years_day" (day 2025 1 1),
                 hday "independence_day" (day 2025 3 21),
                 hday "good_friday" (day 2025 4 18),
@@ -48,4 +48,4 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests "NAM" []
+propTests = countryPropTests NAM []

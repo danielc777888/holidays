@@ -15,7 +15,7 @@ unitTests =
   testGroup
     "MOZ unit tests"
     [ testCase "2025" $
-        sortOn holidayValue (S.toList (holidays "MOZ" [] 2025))
+        sortOn holidayValue (S.toList (holidays MOZ [] 2025))
           @?= [ hday "new_years_day" (day 2025 1 1),
                 hday "heroes_day" (day 2025 2 3),
                 hday "womens_day" (day 2025 4 7),
@@ -29,15 +29,4 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests "MOZ" []
-
-{-
- ( [ hday "new_years_day" . newYearsDay,
-      hday "heroes_day" . feb 3,
-      hday "womens_day" . apr 7,
-      hday "workers_day" . workersDay,
-      hday "independence_day" . jun 25,
-      hday "victory_day" . sep 7,
-      hday "armed_forces_day" . sep 25,
-      hday "day_of_peace_and_reconciliation" . oct 4,
-      hday "family_day" . christmasDay -}
+propTests = countryPropTests MOZ []

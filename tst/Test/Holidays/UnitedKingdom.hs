@@ -15,7 +15,7 @@ unitTests =
   testGroup
     "GBR unit tests"
     [ testCase "2025" $
-        sortOn holidayValue (S.toList (holidays "GBR" [] 2025))
+        sortOn holidayValue (S.toList (holidays GBR [] 2025))
           @?= [ hday "new_years_day" (day 2025 1 1),
                 hday "good_friday" (day 2025 4 18),
                 hday "easter_sunday" (day 2025 4 21),
@@ -26,7 +26,7 @@ unitTests =
                 hday "boxing_day" (day 2025 12 26)
               ],
       testCase "2026" $
-        sortOn holidayValue (S.toList (holidays "GBR" [] 2026))
+        sortOn holidayValue (S.toList (holidays GBR [] 2026))
           @?= [ hday "new_years_day" (day 2026 1 1),
                 hday "good_friday" (day 2026 4 3),
                 hday "easter_sunday" (day 2026 4 6),
@@ -39,4 +39,4 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests "GBR" []
+propTests = countryPropTests GBR []

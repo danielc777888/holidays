@@ -20,7 +20,7 @@ unitTests =
   testGroup
     "ISR unit tests"
     [ testCase "2024" $
-        sortOn holidayValue (excludeSabbaths (S.toAscList (holidays "ISR" [] 2024)))
+        sortOn holidayValue (excludeSabbaths (S.toAscList (holidays ISR [] 2024)))
           @?= [ hday "passover" (day 2024 4 23),
                 hday "seventh_day_of_passover" (day 2024 4 29),
                 hday "independence_day" (day 2024 5 13),
@@ -35,7 +35,7 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests "ISR" []
+propTests = countryPropTests ISR []
 
 excludeSabbaths :: [Holiday] -> [Holiday]
 excludeSabbaths hs = filter (not . T.isPrefixOf "sabbath_" . holidayKey) hs
