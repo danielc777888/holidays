@@ -4,16 +4,71 @@
   https://publicholidays.de/
 --}
 module Holidays.Germany (
+  GermanRegion (..),
   holidays,
+  mkGermanRegions,
 ) where
 
+import Data.Maybe
+import qualified Data.Set as S
+import qualified Data.Text as T
 import Data.Time
 
 import Holidays.Base
 import Holidays.DateFinder
 import Holidays.DateTransform
 
-holidays :: [Region] -> ([Year -> Holiday], [DateTransform])
+-- | 2-letter german region.
+data GermanRegion
+  = BW
+  | BY
+  | BE
+  | BB
+  | HB
+  | HH
+  | HE
+  | MV
+  | NI
+  | NW
+  | RP
+  | SL
+  | SN
+  | ST
+  | SH
+  | TH
+  deriving (Eq, Ord, Show)
+
+mkGermanRegions :: [T.Text] -> S.Set GermanRegion
+mkGermanRegions ts =
+  foldr
+    ( \r acc ->
+        let gr = mkRegion r in if isJust gr then S.insert (fromJust gr) acc else acc
+    )
+    S.empty
+    ts
+
+mkRegion :: T.Text -> Maybe GermanRegion
+mkRegion t =
+  case t of
+    "BW" -> Just BW
+    "BY" -> Just BY
+    "BE" -> Just BE
+    "BB" -> Just BB
+    "HB" -> Just HB
+    "HH" -> Just HH
+    "HE" -> Just HE
+    "MV" -> Just MV
+    "NI" -> Just NI
+    "NW" -> Just NW
+    "RP" -> Just RP
+    "SL" -> Just SL
+    "SN" -> Just SN
+    "ST" -> Just ST
+    "SH" -> Just SH
+    "TH" -> Just TH
+    _ -> Nothing
+
+holidays :: S.Set GermanRegion -> ([Year -> Holiday], [DateTransform])
 holidays regions =
   ( concat
       [ federalHolidays,
@@ -35,27 +90,26 @@ federalHolidays =
     hday "second_day_of_christmas" . boxingDay
   ]
 
-regionalHolidays :: [Region] -> [Year -> Holiday]
+regionalHolidays :: S.Set GermanRegion -> [Year -> Holiday]
 regionalHolidays =
   concatMap
     ( \r -> case r of
-        "BW" -> badenWurttembergHolidays
-        "BY" -> bavariaHolidays
-        "BE" -> berlinHolidays
-        "BB" -> brandenburgHolidays
-        "HB" -> bremenHolidays
-        "HH" -> hamburgHolidays
-        "HE" -> hesseHolidays
-        "MV" -> mecklenburgVorpommernHolidays
-        "NI" -> lowerSaxonyHolidays
-        "NW" -> northRhineWestphaliaHolidays
-        "RP" -> rhinelandPalatinateHolidays
-        "SL" -> saarlandHolidays
-        "SN" -> saxonyHolidays
-        "ST" -> saxonyAnhaltHolidays
-        "SH" -> schleswigHolsteinHolidays
-        "TH" -> thuringiaHolidays
-        _ -> []
+        BW -> badenWurttembergHolidays
+        BY -> bavariaHolidays
+        BE -> berlinHolidays
+        BB -> brandenburgHolidays
+        HB -> bremenHolidays
+        HH -> hamburgHolidays
+        HE -> hesseHolidays
+        MV -> mecklenburgVorpommernHolidays
+        NI -> lowerSaxonyHolidays
+        NW -> northRhineWestphaliaHolidays
+        RP -> rhinelandPalatinateHolidays
+        SL -> saarlandHolidays
+        SN -> saxonyHolidays
+        ST -> saxonyAnhaltHolidays
+        SH -> schleswigHolsteinHolidays
+        TH -> thuringiaHolidays
     )
 
 -- common holidays

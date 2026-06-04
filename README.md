@@ -13,7 +13,7 @@ import Holidays
 
 main :: IO ()
 main = do
-  let hs = holidays "USA" [] 2025
+  let hs = holidays USA 2025
   print hs
 
 ```

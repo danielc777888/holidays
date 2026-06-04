@@ -19,3 +19,6 @@
 
 ## **0.3.0.2** - 2026-05-07
 - new country supported: ISR
+
+## **0.4.0.0** - 2026-06-04
+- use ADT's for country codes and regions

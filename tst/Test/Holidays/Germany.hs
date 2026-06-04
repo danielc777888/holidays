@@ -11,15 +11,15 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 -- german states
-regions :: [Region]
-regions = ["BW", "BY", "BE", "BB", "HB", "HH", "HE", "MV", "NI", "NW", "RP", "SL", "SN", "ST", "SH", "TH"]
+regions :: S.Set GermanRegion
+regions = S.fromList [BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH]
 
 unitTests :: TestTree
 unitTests =
   testGroup
     "DEU unit tests"
     [ testCase "2025" $
-        sortOn holidayValue (S.toAscList (holidays DEU regions 2025))
+        sortOn holidayValue (S.toAscList (holidays (DEU regions) 2025))
           @?= [ hday "new_years_day" (day 2025 1 1),
                 hday "epiphany" (day 2025 1 6),
                 hday "international_womens_day" (day 2025 3 8),
@@ -44,4 +44,4 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests DEU regions
+propTests = countryPropTests (DEU regions)

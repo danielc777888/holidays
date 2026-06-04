@@ -12,8 +12,8 @@ import Test.Tasty.QuickCheck as QC
 day :: Year -> MonthOfYear -> DayOfMonth -> Day
 day = fromGregorian
 
-countryPropTests :: H.ISO_3166_1_Alpha_3 -> [H.Region] -> TestTree
-countryPropTests countryCode regions =
+countryPropTests :: H.ISO_3166_1_Alpha_3 -> TestTree
+countryPropTests countryCode =
   let uniqueYears c y =
         S.map
           ( \h ->
@@ -22,7 +22,7 @@ countryPropTests countryCode regions =
               in
                 year'
           )
-          (H.holidays c regions y)
+          (H.holidays c y)
   in  testGroup
         ("Holidays property based tests for country " <> show countryCode)
         [ QC.testProperty "Day always in the same year" $

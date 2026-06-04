@@ -15,7 +15,7 @@ unitTests =
   testGroup
     "USA unit tests"
     [ testCase "2025" $
-        sortOn holidayValue (S.toAscList (holidays USA [] 2025))
+        sortOn holidayValue (S.toAscList (holidays USA 2025))
           @?= [ hday "new_years_day" (day 2025 1 1),
                 hday "martin_luther_kings_birthday" (day 2025 1 20),
                 hday "george_washingtons_birthday" (day 2025 2 17),
@@ -31,4 +31,4 @@ unitTests =
     ]
 
 propTests :: TestTree
-propTests = countryPropTests USA []
+propTests = countryPropTests USA

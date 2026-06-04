@@ -1,6 +1,6 @@
 cabal-version: 3.0
 name: holidays
-version: 0.3.0.2
+version: 0.4.0.0
 synopsis: Library for country public holidays
 description:
   Public holidays with Haskell.

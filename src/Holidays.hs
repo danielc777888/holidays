@@ -3,14 +3,16 @@ This module determines public holidays based on country code and year.
 -}
 module Holidays (
   ISO_3166_1_Alpha_3 (..),
-  Region,
+  Germany.GermanRegion (..),
   holidays,
   hday,
   Holiday (..),
+  mkCountryCode,
 )
 where
 
 import qualified Data.Set as S
+import qualified Data.Text as T
 import Data.Time
 import Holidays.Base
 import Holidays.DateTransform
@@ -22,6 +24,30 @@ import qualified Holidays.SouthAfrica as SouthAfrica
 import qualified Holidays.UnitedKingdom as UnitedKingdom
 import qualified Holidays.UnitedStates as UnitedStates
 
+-- | 3-letter country codes.
+data ISO_3166_1_Alpha_3
+  = DEU (S.Set Germany.GermanRegion)
+  | GBR
+  | ISR
+  | MOZ
+  | NAM
+  | USA
+  | ZAF
+  deriving (Show)
+
+-- | Constructor for country code.
+mkCountryCode :: T.Text -> [T.Text] -> Maybe ISO_3166_1_Alpha_3
+mkCountryCode t regions =
+  case t of
+    "DEU" -> Just (DEU (Germany.mkGermanRegions regions))
+    "GBR" -> Just GBR
+    "ISR" -> Just ISR
+    "MOZ" -> Just MOZ
+    "NAM" -> Just NAM
+    "USA" -> Just USA
+    "ZAF" -> Just ZAF
+    _ -> Nothing
+
 {- |
 Returns a set of public holidays based on the country code (ISO_3166_1_Alpha_3) and a specific year.
 If a country is not supported an empty set is returned.
@@ -30,14 +56,14 @@ Country regions are also supported.
 Examples:
 
 @
-holidays \"DEU\" [\"BW\",\"BY\",\"BE\"] 2025 -- Germany and various regions
-holidays \"USA\" [] 2025
+holidays DEU (S.fromList [BW, BY ,BE]) 2025 -- Germany and various regions
+holidays USA 2025
 @
 -}
-holidays :: ISO_3166_1_Alpha_3 -> [Region] -> Year -> S.Set Holiday
-holidays countryCode regions year =
+holidays :: ISO_3166_1_Alpha_3 -> Year -> S.Set Holiday
+holidays countryCode year =
   case countryCode of
-    DEU -> Germany.holidays regions `apply` year
+    (DEU regions) -> Germany.holidays regions `apply` year
     GBR -> UnitedKingdom.holidays `apply` year
     ISR -> S.union (Israel.holidays `apply` year) (Israel.sabbaths year)
     MOZ -> Mozambique.holidays `apply` year
