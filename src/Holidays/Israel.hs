@@ -8,15 +8,11 @@ module Holidays.Israel (
 ) where
 
 import qualified Data.Set as S
-
--- import Data.Text (show)
 import qualified Data.Text as T
 import Data.Time
 import qualified Data.Time.Calendar.Hebrew as H
 
 import Holidays.Base
-
--- import Holidays.DateFinder
 import Holidays.DateTransform
 
 holidays :: ([Year -> Holiday], [DateTransform])
@@ -52,5 +48,6 @@ Use year and offset by +1 and -1 to deal with year edge discrepencies when conve
 hebrewDates :: Year -> [H.HebrewDate]
 hebrewDates y = map (\x -> H.toHebrew (fromGregorian (y + x) January 1)) [-1, 0, 1]
 
+-- | Get all sabbaths for a year. Essentially when day is a Saturday.
 sabbaths :: Year -> S.Set Holiday
 sabbaths = S.fromList . map (\(i, d) -> hday ("sabbath_" <> (T.show i)) d) . zip [1 :: Int ..] . filter (\d -> dayOfWeek d == Saturday) . periodAllDays

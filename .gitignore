@@ -24,3 +24,7 @@ cabal.project.local~
 *.*~
 *.out
 *~
+build
+cache
+packagedb
+*.tar.gz
