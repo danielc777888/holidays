@@ -35,8 +35,13 @@ data ISO_3166_1_Alpha_3
   | ZAF
   deriving (Show)
 
--- | Constructor for country code.
-mkCountryCode :: T.Text -> [T.Text] -> Maybe ISO_3166_1_Alpha_3
+-- | Constructor for a country code.
+mkCountryCode ::
+  -- | The country code in text.
+  T.Text ->
+  -- | Region codes in text.
+  [T.Text] ->
+  Maybe ISO_3166_1_Alpha_3
 mkCountryCode t regions =
   case t of
     "DEU" -> Just (DEU (Germany.mkGermanRegions regions))
@@ -56,7 +61,7 @@ Country regions are also supported.
 Examples:
 
 @
-holidays DEU (S.fromList [BW, BY ,BE]) 2025 -- Germany and various regions
+holidays (DEU (S.fromList [BW, BY, BE])) 2025 -- Germany and various regions
 holidays USA 2025
 @
 -}
